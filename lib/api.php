@@ -11,7 +11,7 @@ if (isset($_GET['systems'])) {
     $runtimes = $sqlquery->get_times();
     $array = array();
     for ($i = 0; $i < sizeof($id); $i++) {
-        $value = shell_exec('gpio -g read ' . $gpios[$i]);
+        $value = shell_exec('gpio -g read ' . $gpios[$i] . ' || exit 0');
         $array[$i] = (object)array();
         $array[$i]->gpio = $gpios[$i];
         $array[$i]->status = ($value == 0 ? "on" : "off");
@@ -66,9 +66,10 @@ if (isset($_POST['call'])) {
         $gpio = $_POST['gpio'];
         $zone = $_POST['zone'];
         $name = $_POST['name'];
-        $oldname = $_POST['oldname'];
         $runtime = $_POST['runtime'];
-        $sqlquery->querySQL("UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime . " WHERE id=" . $zone);
+        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime . " WHERE id=" . $zone;
+        $sqlquery->querySQL($query);
+        echo $query;
     }
     if ($callType == "add") {
         $gpio = $_POST['gpio'];

@@ -49,7 +49,7 @@ function getData(id, add) {
     $("#edit").delay(250).fadeIn(500);
 }
 
-function submitChanges(id, zonename, oldname, gpio, runtime) {
+function submitChanges(id, zonename, gpio, runtime) {
     var addMode = window.addMode;
     var deleteMode = window.deleteMode;
     var data;
@@ -65,7 +65,6 @@ function submitChanges(id, zonename, oldname, gpio, runtime) {
             call: "update",
             zone: id,
             name: zonename,
-            oldname: oldname,
             gpio: gpio,
             runtime: runtime
         };
@@ -78,10 +77,6 @@ function submitChanges(id, zonename, oldname, gpio, runtime) {
     }
     console.log(data);
     $.post("../lib/api.php", data).done(function (data) {
-        if (data == "")
-            data = "Success."
-        else
-            alert("Check the logs! An error has occured.");
         console.log("Received data: " + data);
         if(addMode || deleteMode)
             location.reload();

@@ -40,15 +40,16 @@
     });
     $("#settings-submit").click(function () {
         runtime = $("#zone-runtime").val();
-        newname = $("#zone-name").val();
+        name = $("#zone-name").val();
         gpio = $("#zone-gpio").val();
         var addMode = window.addMode;
         if (addMode) {
-            submitChanges("", newname, "", gpio, runtime);
+            submitChanges("", name, gpio, runtime);
         } else {
-            oldname = system_status[system_id]["zonename"];
-            submitChanges(system_status[system_id]['id'], newname, oldname, gpio, runtime);
+            var id = system_status[system_id]['id'];
+            submitChanges(id, name, gpio, runtime);
         }
+        console.log(name);
     });
 </script>
 <div style="font-size: 1.25em;display:block!important;"
