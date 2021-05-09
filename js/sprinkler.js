@@ -24,7 +24,8 @@ function getSprinklers() {
         let name_id;
         for (i = 0; i < system_status.length; i++) {
             button_id = system_status[i]["gpio"];
-            name_id = (system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1));
+            // This line is horrid.
+            name_id = (system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1)) == "Off" ? "On" : "Off";
             document.getElementById(button_id).innerHTML = "Turn " + name_id;
             document.getElementById("status-" + i).innerHTML = ((name_id == "On") ? "Off" : "On");
             if (name_id == "Off") {
