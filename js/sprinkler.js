@@ -1,9 +1,10 @@
 var system_status = "";
+let system_enable;
 
 function getSprinklers() {
     setInterval(function () {
         $.get('lib/api.php?systemstatus', function (data, textStatus, jqXHR) {
-            let system_enable = JSON.parse(data)["systemstatus"] == "1";
+            system_enable = JSON.parse(data)["systemstatus"] == "1";
             if (system_enable) {
                 $("#schedule").html("On");
                 $("#schedule-btn-txt").html("Off");
@@ -23,7 +24,7 @@ function getSprinklers() {
         let name_id;
         for (i = 0; i < system_status.length; i++) {
             button_id = system_status[i]["gpio"];
-            name_id = (system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1)) == "Off";
+            name_id = (system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1));
             document.getElementById(button_id).innerHTML = "Turn " + name_id;
             document.getElementById("status-" + i).innerHTML = ((name_id == "On") ? "Off" : "On");
             if (name_id == "Off") {
@@ -33,7 +34,6 @@ function getSprinklers() {
                 $("#" + button_id).removeClass("systemon")
                 $("#" + button_id).addClass("systemoff")
             }
-            //todo
         }
     }, 1000);
     $("body").delay(1750).fadeIn(250);
@@ -44,13 +44,11 @@ $(document).ready(function () {
         $("#menuopen").fadeOut(250, function () {
             $('#menunav').fadeIn(250);
         });
-
     });
     $("#menuclose").click(function () {
         $('#menunav').fadeOut(250, function () {
             $("#menuopen").fadeIn(250);
         });
-
     });
     $("#schedule-btn").click(function () {
         let xhttp = new XMLHttpRequest();
