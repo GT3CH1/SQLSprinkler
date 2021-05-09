@@ -39,7 +39,7 @@ $gpios = $sqlquery->get_gpios();
         ?>
         <tr>
             <td><?php echo $i + 1; ?></td>
-            <td style="text-align: left"><?php echo $names[$i]; ?></td>
+            <td><?php echo $names[$i]; ?></td>
             <td><?php echo $times[$i]; ?></td>
             <td>
                 <button id="<?php echo $i; ?>" value="edit" class="w3-button w3-gray w3-round-large">Edit</button>
