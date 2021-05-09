@@ -61,7 +61,6 @@ if (isset ($_GET['update'])) {
     echo $test;
     $test = shell_exec('/usr/bin/git pull');
     echo $test;
-    echo "Done checking for updates.";
 }
 if (isset($_POST['call'])) {
     $callType = $_POST['call'];
