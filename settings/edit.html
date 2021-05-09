@@ -23,24 +23,6 @@
     $("#back").click(function () {
         doCloseWindow();
     })
-    $("#zone-gpio").change(function () {
-        if (!($(this).val() == system_status[system_id]["gpio"])) {
-            $(this).css("color", "#FF0000");
-            $("#notification-text").html('Are you sure you want to change the GPIO pin from ' + system_status[system_id]["gpio"] + '?');
-            $("#notification").fadeIn("slow");
-            $(".dismiss").click(function () {
-                $("#notification").fadeOut("slow");
-            });
-            $("#notification-no").click(function () {
-                $("#zone-gpio").val(system_status[system_id]["gpio"]);
-                $(".dismiss").click();
-                $("#zone-gpio").css("color", "#000000");
-            });
-        } else {
-            $(this).css("color", "#000000");
-            $("#notification").fadeOut("slow");
-        }
-    });
     $("#settings-submit").click(function () {
         runtime = $("#zone-runtime").val();
         name = $("#zone-name").val();
@@ -50,8 +32,10 @@
             submitChanges("", name, gpio, runtime);
         } else {
             var id = system_status[system_id]['id'];
+            console.log(id);
             submitChanges(id, name, gpio, runtime);
         }
+        console.log(gpio);
         console.log(name);
     });
 </script>
