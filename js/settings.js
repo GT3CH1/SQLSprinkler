@@ -78,9 +78,8 @@ function submitChanges(id, zonename, gpio, runtime) {
     console.log(data);
     $.post("../lib/api.php", data).done(function (data) {
         console.log("Received data: " + data);
-        if(addMode || deleteMode)
-            location.reload();
         doCloseWindow();
+        setTimeout(location.reload.bind(location), 1500);
     });
 }
 
