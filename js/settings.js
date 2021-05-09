@@ -6,12 +6,14 @@ $.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return ((results == null) ? null : results[1] || 0);
 }
-$(document).ready(function () {
-    window.deleteMode = false;
+function getSystemStatus(){
     $.get('../lib/api.php?systems', function (data, textStatus, jqXHR) {
-
         system_status = JSON.parse(data);
     });
+}
+$(document).ready(function () {
+    window.deleteMode = false;
+    getSystemStatus();
     $("button").click(function () {
         var id = $(this).attr("id");
         if ($(this).val() == "edit")
@@ -79,11 +81,11 @@ function submitChanges(id, zonename, gpio, runtime) {
     $.post("../lib/api.php", data).done(function (data) {
         console.log("Received data: " + data);
         doCloseWindow();
-        setTimeout(location.reload.bind(location), 1500);
     });
 }
 
 function doCloseWindow(){
     $("#edit").fadeOut(500);
     $("#table").fadeIn(500);
+    getSystemStatus();
 }
