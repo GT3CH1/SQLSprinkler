@@ -3,8 +3,7 @@ var system_status = "";
 function getSprinklers() {
     setInterval(function () {
         $.get('lib/api.php?systemstatus', function (data, textStatus, jqXHR) {
-            system_enable = JSON.parse(data)["systemstatus"];
-            system_enable = (system_enable == "1") ? true : false;
+            let system_enable = JSON.parse(data)["systemstatus"] == "1";
             if (system_enable) {
                 $("#schedule").html("On");
                 $("#schedule-btn-txt").html("Off");
@@ -20,10 +19,11 @@ function getSprinklers() {
         $.get('lib/api.php?systems', function (data, textStatus, jqXHR) {
             system_status = JSON.parse(data);
         });
+        let button_id;
+        let name_id;
         for (i = 0; i < system_status.length; i++) {
             button_id = system_status[i]["gpio"];
-            name_id = system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1);
-            name_id = ((name_id == "Off") ? "On" : "Off");
+            name_id = (system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1)) == "Off";
             document.getElementById(button_id).innerHTML = "Turn " + name_id;
             document.getElementById("status-" + i).innerHTML = ((name_id == "On") ? "Off" : "On");
             if (name_id == "Off") {
@@ -52,6 +52,15 @@ $(document).ready(function () {
         });
 
     });
+    $("#schedule-btn").click(function () {
+        let xhttp = new XMLHttpRequest();
+        let enabled = !system_enable;
+        var info = "systemenable=" + enabled;
+        xhttp.open("GET", "lib/api.php?" + info, true);
+        console.log("sending");
+        console.log(info);
+        xhttp.send();
+    });
     $("#update").click(function () {
         console.log("Sent update request...");
         $.get('lib/api.php?update', function (data, textStatus, jqXHR) {
@@ -75,19 +84,4 @@ function getData(index) {
     xhttp.send();
 }
 
-function systemToggle() {
-    var xhttp = new XMLHttpRequest();
-    var enabled = !system_enable;
-    var info = "systemenable=" + enabled;
-    xhttp.open("GET", "lib/api.php?" + info, true);
-    console.log("sending");
-    console.log(info);
-    xhttp.send();
-    if (enabled) {
-        $("#schedule-btn").removeClass("programoff");
-        $("#schedule-btn").addClass("programon");
-    } else {
-        $("#schedule-btn").addClass("programoff");
-        $("#schedule-btn").removeClass("programon");
-    }
-}
+

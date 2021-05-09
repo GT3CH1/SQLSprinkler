@@ -6,8 +6,7 @@ $names = $sqlquery->get_names();
 $gpios = $sqlquery->get_gpios();
 $id = $sqlquery->get_id();
 ?>
-<!doctype html>
-<html>
+<html lang="en">
 <head>
     <base href="<?php echo $_SERVER['HTTP_HOST']; ?>"/>
     <meta charset="utf-8">
@@ -38,9 +37,10 @@ $id = $sqlquery->get_id();
                 </div>
             </td>
             <td>
-                <button id="schedule-btn " onclick="systemToggle();return false;"
-                        class="w3-button programoff w3-round-xxlarge w3-centered mybutton sprinkler-button">Turn <span
-                            id="schedule-btn-txt">Off</span></button>
+                <button id="schedule-btn"
+                        class="w3-button programoff w3-round-xxlarge w3-centered mybutton sprinkler-button">Turn
+                    <span id="schedule-btn-txt">Off</span>
+                </button>
             </td>
         </tr>
         <?php
@@ -85,7 +85,6 @@ $id = $sqlquery->get_id();
         <a href="settings" class="w3-button"><i style="z-index: 5;" class="fa fa-gears"></i></a>
         <a id="update" class="w3-button"><i style="z-index: 5;" class="fas fa-download"></i></a>
     </div>
-</div>
 </div>
 </body>
 </html>
