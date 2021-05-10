@@ -11,7 +11,7 @@ if (isset($_GET['systems'])) {
     $runtimes = $sqlquery->get_times();
     $array = array();
     for ($i = 0; $i < sizeof($id); $i++) {
-        $value = shell_exec('gpio -g read ' . $gpios[$i] . ' || exit 0');
+        $value = exec(' which gpio && gpio -g read ' . $gpios[$i]);
         $array[$i] = (object)array();
         $array[$i]->gpio = $gpios[$i];
         $array[$i]->status = ($value == 0 ? "on" : "off");
