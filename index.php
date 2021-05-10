@@ -2,9 +2,9 @@
 include('lib/sql.php');
 $sqlquery = new doSQL();
 $sqlquery->doSQLStuff("SELECT * FROM `Systems`");
-$names = $sqlquery->get_names();
-$gpios = $sqlquery->get_gpios();
-$id = $sqlquery->get_id();
+$names = $sqlquery->names;
+$gpios = $sqlquery->gpios;
+$id = $sqlquery->ids;
 ?>
 <html lang="en">
 <head>
