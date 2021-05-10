@@ -3,12 +3,13 @@
 include('sql.php');
 $sqlquery = new doSQL();
 
+
 if (isset($_GET['systems'])) {
     $sqlquery->doSQLStuff("SELECT * FROM `Systems`");
-    $gpios = $sqlquery->get_gpios();
-    $id = $sqlquery->get_id();
-    $names = $sqlquery->get_names();
-    $runtimes = $sqlquery->get_times();
+    $gpios = $sqlquery->gpios;
+    $id = $sqlquery->ids;
+    $names = $sqlquery->names;
+    $runtimes = $sqlquery->times;
     $array = array();
     for ($i = 0; $i < sizeof($id); $i++) {
         $value = exec(' which gpio && gpio -g read ' . $gpios[$i]);
@@ -84,4 +85,4 @@ if (isset($_POST['call'])) {
         $sqlquery->querySQL("DELETE FROM `Systems` WHERE `id` = " . $zone);
     }
 }
-?>
+
