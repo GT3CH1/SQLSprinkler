@@ -1,6 +1,7 @@
 var system_status = "";
 let system_enable;
 let loadTable = true;
+
 function getSprinklerData() {
     $.get('lib/api.php?systemstatus', function (data, textStatus, jqXHR) {
         system_enable = JSON.parse(data)["systemstatus"] == "1";
@@ -18,9 +19,9 @@ function getSprinklerData() {
     });
     $.get('lib/api.php?systems', function () {
 
-    }).done(function(data, textStatus, jqXHR) {
+    }).done(function (data, textStatus, jqXHR) {
         system_status = JSON.parse(data);
-        if(loadTable)
+        if (loadTable)
             createTable();
         loadTable = false;
     });
@@ -36,6 +37,7 @@ function getSprinklers() {
             // This line is horrid.
             name_id = (system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1)) == "Off" ? "On" : "Off";
             document.getElementById("status-" + i).innerHTML = ((name_id == "On") ? "Off" : "On");
+            document.getElementById("status-button-" + i).innerHTML = name_id;
             if (name_id == "Off") {
                 $("#" + button_id).removeClass("systemoff")
                 $("#" + button_id).addClass("systemon")
@@ -90,8 +92,8 @@ function createTable() {
         let sprinklerInfo = system_status[i];
         let name = sprinklerInfo['zonename'];
         let gpio = sprinklerInfo['gpio'];
-        let tr = "<tr><td><div class='sprinkler-info'><p class='sprinkler-name'>Zone " + (i+1) + "</p><p> " + name + " </p><p>Status: <span id='status-"+i+"'>Off</span></p> </div></td>"
-        tr += "<td><div class='sprinkler-button'><button id='"+gpio+"' name='toggle' onclick='getData("+i+"); return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>Turn On</button> </div></td></tr>"
+        let tr = "<tr><td><div class='sprinkler-info'><p class='sprinkler-name'>Zone " + (i + 1) + "</p><p> " + name + " </p><p>Status: <span id='status-" + i + "'>Off</span></p> </div></td>"
+        tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + "); return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>Turn <span id='status-button-" + i + "'>Off</span></button> </div></td></tr>"
         $("#sprinklerData").append(tr);
     }
 }
