@@ -3,10 +3,10 @@
 include('../lib/sql.php');
 $sqlquery = new doSQL();
 $sqlquery->doSQLStuff("SELECT * FROM `Systems`");
-$id = $sqlquery->get_id();
-$names = $sqlquery->get_names();
-$times = $sqlquery->get_times();
-$gpios = $sqlquery->get_gpios();
+$id = $sqlquery->ids;
+$names = $sqlquery->names;
+$times = $sqlquery->times;
+$gpios = $sqlquery->gpios;
 ?>
 
 <html>
