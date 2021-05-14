@@ -2,7 +2,8 @@
 
 ## A lightweight web page to control sprinkler systems on a raspberry pi.
 
-### SETUP:
+### SETUP
+
 
     * On debian, run the following command (after updating):
         `# apt install apache2 php libapache2-mod-php php-mysql phpmyadmin`
