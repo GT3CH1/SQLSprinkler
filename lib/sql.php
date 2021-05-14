@@ -29,13 +29,13 @@ class doSQL
 
     public function __construct()
     {
-        require __DIR__ . '../vendor/autoload.php';
+        require __DIR__ . '/../vendor/autoload.php';
         $dotenv = Dotenv\Dotenv::createImmutable('../');
         $dotenv->load();
-        $this->servername = $_ENV('SQLSPRINKLER_SQL_HOST');
-        $this->username = $_ENV('SQLSPRINKLER_USER');
-        $this->password = $_ENV('SQLSPRINKLER_PASS');
-        $this->dbname = $_ENV('SQLSPRINKLER_DB');
+        $this->servername = $_ENV['SQLSPRINKLER_SQL_HOST'];
+        $this->username = $_ENV['SQLSPRINKLER_USER'];
+        $this->password = $_ENV['SQLSPRINKLER_PASS'];
+        $this->dbname = $_ENV['SQLSPRINKLER_DB'];
     }
 
     function querySQL($query)
