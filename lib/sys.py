@@ -24,7 +24,7 @@ cur.execute("SELECT enabled from Enabled");
 for row in list(cur.fetchall()):
 	isEnabled = row[0]
 print("Is enabled -> " + str(isEnabled))
-cur.execute("SELECT gpio, Time, Days, id FROM Systems ")
+cur.execute("SELECT gpio, Time, id FROM Systems ")
 # print all the first cell of all the rows
 for row in list(cur.fetchall()):
 	if (isEnabled==1):
