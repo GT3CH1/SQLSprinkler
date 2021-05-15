@@ -29,7 +29,7 @@ cur.execute("SELECT gpio, Time, id FROM Systems ")
 for row in list(cur.fetchall()):
 	if (isEnabled==1):
 		GPIO.setmode(GPIO.BCM)
-		print("System %s "% row[3])
+		print("System %s "% row[2])
 		GPIO.setup(int(row[0]), GPIO.OUT)
 		GPIO.output(int(row[0]), False)
 		time.sleep(int(row[1])*60)
