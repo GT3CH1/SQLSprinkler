@@ -57,7 +57,7 @@ if (isset ($_GET['systemenable'])) {
 if (isset ($_GET['update'])) {
     $test = shell_exec('/usr/bin/git fetch');
     echo $test;
-    $test = shell_exec('/usr/bin/git reset --hard HEAD');
+    $test = shell_exec('/usr/bin/git reset');
     echo $test;
     $test = shell_exec('/usr/bin/git pull');
     echo $test;
