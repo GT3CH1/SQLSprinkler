@@ -23,6 +23,8 @@ cur = db.cursor()
 cur.execute("SELECT gpio FROM Systems;")
 
 # print all the first cell of all the rows
-for row in list(cur.fetchall()[0]):
+for item in list(cur.fetchall()):
+    row=item[0]
     print(row)
+    GPIO.setup(row,GPIO.OUT)
     GPIO.output(row,True)
