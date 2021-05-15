@@ -11,4 +11,5 @@ id INT NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (id)
 );
 CREATE TABLE Enabled(enabled BOOL);
+INSERT INTO Enabled (enabled) VALUES (0);
 "
