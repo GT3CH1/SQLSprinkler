@@ -32,10 +32,10 @@ class doSQL
         require __DIR__ . '/../vendor/autoload.php';
         $dotenv = Dotenv\Dotenv::createImmutable('../');
         $dotenv->load();
-        $this->servername = $_ENV['SQLSPRINKLER_SQL_HOST'];
-        $this->username = $_ENV['SQLSPRINKLER_USER'];
-        $this->password = $_ENV['SQLSPRINKLER_PASS'];
-        $this->dbname = $_ENV['SQLSPRINKLER_DB'];
+        $this->servername = $_SERVER['SQLSPRINKLER_SQL_HOST'];
+        $this->username = $_SERVER['SQLSPRINKLER_USER'];
+        $this->password = $_SERVER['SQLSPRINKLER_PASS'];
+        $this->dbname = $_SERVER['SQLSPRINKLER_DB'];
     }
 
     function querySQL($query)
