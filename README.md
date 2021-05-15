@@ -25,8 +25,7 @@
   5) Click on the bottom left icon, click on settings, then click on the bottom left icon again, then click the plus sign to start adding sprinkler systems.
   6) Run the following command `sudo apt install python3 python3-pip`
   7) Run: `pip install pymysql python-dotenv RPi.GPIO`
-  8) Add the following line to `/etc/sudoers`
-    * `www-data        ALL=NOPASSWD: /var/www/html/modules/SQLSprinkler/lib/*.py`
+  8) Add the following line to `/etc/sudoers` : `www-data        ALL=NOPASSWD: /var/www/html/modules/SQLSprinkler/lib/*.py`
   9) Run `sudo -s`
   10) Run `su www-data -s /bin/bash`
   11) Run `crontab -e`
