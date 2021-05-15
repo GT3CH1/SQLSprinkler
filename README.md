@@ -16,27 +16,27 @@
 * Once you verify that apache is running properly, navigate to your phpmyadmin page, and create a database called `SQLSprinkler`
   * (Recommended) You may wish to create a user that only has access to this database.
   1) Create the following table (4 rows, non-null) named `Systems`:
-        1)
+        1)  
           Name: 'Name'  
           Type: 'text'  
-        2)
-          Name: 'GPIO'
-          Type: int
-        3)
-          Name: 'Time'
-          Type: int
-        4)
-          Name: 'Days'
-          Type: int
-        5)
-          Name: 'id'
-          Type: int
-          Auto-increment
-  2) Create the following table (1 row) named `Enabled`
-      1)
-          - Name: 'enabled'
-          - Type: 'boolean'
-          - Default: 0
+        2)  
+          Name: 'GPIO'  
+          Type: int  
+        3)  
+          Name: 'Time'  
+          Type: int  
+        4)  
+          Name: 'Days'  
+          Type: int  
+        5)  
+          Name: 'id'  
+          Type: int  
+          Auto-increment  
+  2) Create the following table (1 row) named `Enabled` 
+      1)  
+          - Name: 'enabled'  
+          - Type: 'boolean'  
+          - Default: 0  
   3) Update the .env file to contain the username and password of the user you used to edit the database.
   4) Run `compose install` in the project root directory
       - You may need to install composer with the following commands if your system does not have a package for it
