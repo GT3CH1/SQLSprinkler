@@ -41,7 +41,7 @@
   4) Run `compose install` in the project root directory
       - You may need to install composer with the following commands if your system does not have a package for it
         - `wget -O composer-setup.php https://getcomposer.org/installer`
-        - sudo php composer-setup.php --install-dir=/usr/bin --filename=composer`
+        - `sudo php composer-setup.php --install-dir=/usr/bin --filename=composer`
   5) Navigate to `http://localhost/SQLSprinkler` to see if the page loads.
   6) Click on the bottom left icon, click on settings, then click on the bottom left icon again, then click the plus sign to start adding sprinkler systems.
   7) Run the following command `sudo apt install python3 python3-pip`
