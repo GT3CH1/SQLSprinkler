@@ -10,7 +10,7 @@ dotenv_path = join(dirname(__file__), '../.env')
 load_dotenv(dotenv_path)
 HOST=os.getenv('SQLSPRINKLER_SQL_HOST')
 USER=os.getenv('SQLSPRINKLER_USER')
-PASS=os.getenv('SQLSPINKLER_PASS')
+PASS=os.getenv('SQLSPRINKLER_PASS')
 DB=os.getenv('SQLSPRINKLER_DB')
 
 GPIO.setmode(GPIO.BCM)
