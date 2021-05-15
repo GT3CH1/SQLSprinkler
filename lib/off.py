@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import RPi.GPIO as GPIO
-import MySQLdb
+import pymysql as sql
 import time
 from dotenv import load_dotenv
 import os
@@ -17,7 +17,7 @@ DB=os.getenv('SQLSPRINKLER_DB')
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-db = MySQLdb.connect(host=HOST, user=USER, passwd=PASS, db=DB)
+db = sql.connect(host=HOST, user=USER, passwd=PASS, db=DB)
 
 cur = db.cursor()
 cur.execute("SELECT gpio FROM Systems;")
