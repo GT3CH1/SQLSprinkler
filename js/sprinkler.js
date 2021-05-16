@@ -2,8 +2,8 @@ var system_status = "";
 let system_enable;
 let loadTable = true;
 
-function getSprinklerData() {
-    $.get('lib/api.php?systemstatus', function (data, textStatus, jqXHR) {
+function getSprinklerData(path) {
+    $.get(path+'/lib/api.php?systemstatus', function (data, textStatus, jqXHR) {
         system_enable = JSON.parse(data)["systemstatus"] == "1";
         if (system_enable) {
             $("#schedule").html("On");
@@ -50,7 +50,6 @@ function getSprinklers() {
 }
 
 $(document).ready(function () {
-    getSprinklers();
     $("body").delay(1750).fadeIn(250);
     $("#menuopen").click(function () {
         $("#menuopen").fadeOut(250, function () {
@@ -86,16 +85,43 @@ $(document).ready(function () {
     });
 });
 
+function createEditTable(){
+    let tr="";
+    for(i = 0 ; i < system_status.length; i++){
+        let sprinklerInfo = system_status[i];
+        tr = "<tr><td>" +  (i+1) + "</td>";
+        tr += "<td id='zone-name-'"+sprinklerInfo['id']+"></td>";
+        tr += "<td id='zone-time-'"+sprinklerInfo['id']+"></td>";
+        tr += "<td>";
+        tr += "<button id='"+sprinklerInfo['id']+"' value='edit' class='w3-button w3-gray w3-round-large'>Edit</button>";
+        tr += "<button id='"+sprinklerInfo['id']+"' value='delete' class='w3-button w3-red w3-round-large'>Edit</button>";
+        tr += "</td></tr>";
+    }
+    $("#table").append(tr);
+    setEditTableValues();
+}
+
+function setEditTableValues(){
+    for(i = 0 ; i < system_status.length; i++){
+        let sprinklerInfo = system_status[i];
+        let id = sprinklerInfo['id'];
+        let name = sprinklerInfo['name'];
+        let time = sprinklerInfo['runtime'];
+        $("#zone-name-"+id).valu
+    }
+}
+
 function createTable() {
     console.log(system_status.length)
+    let tr="";
     for (i = 0; i < system_status.length; i++) {
         let sprinklerInfo = system_status[i];
         let name = sprinklerInfo['zonename'];
         let gpio = sprinklerInfo['gpio'];
-        let tr = "<tr><td><div class='sprinkler-info'><p class='sprinkler-name'>Zone " + (i + 1) + "</p><p> " + name + " </p><p>Status: <span id='status-" + i + "'>Off</span></p> </div></td>"
+        tr = "<tr><td><div class='sprinkler-info'><p class='sprinkler-name'>Zone " + (i + 1) + "</p><p> " + name + " </p><p>Status: <span id='status-" + i + "'>Off</span></p> </div></td>"
         tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + "); return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>Turn <span id='status-button-" + i + "'>Off</span></button> </div></td></tr>"
-        $("#sprinklerData").append(tr);
     }
+    $("#sprinklerData").append(tr);
 }
 
 function getData(index) {

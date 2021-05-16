@@ -1,14 +1,3 @@
-<?php
-
-include('../lib/sql.php');
-$sqlquery = new doSQL();
-$sqlquery->doSQLStuff("SELECT * FROM `Systems`");
-$id = $sqlquery->ids;
-$names = $sqlquery->names;
-$times = $sqlquery->times;
-$gpios = $sqlquery->gpios;
-?>
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -23,8 +12,8 @@ $gpios = $sqlquery->gpios;
     <script src="../js/settings.js"></script>
 </head>
 <body>
-<div class="w3-display-topmiddle w3-threequarter w3-mobile w3-padding-small" id="table">
-    <table class="w3-table-all w3-centered sprinkler-table">
+<div class="w3-display-topmiddle w3-threequarter w3-mobile w3-padding-small">
+    <table class="w3-table-all w3-centered sprinkler-table" id="table">
         <tr>
             <th>Zone</th>
             <th>Name</th>
