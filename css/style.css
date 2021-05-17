@@ -12,11 +12,11 @@
 }
 
 .programoff {
-    background-color: #FFBBBB;
+    background-color: #FF8B8B;
 }
 
 .systemoff {
-    background-color: #BFFFCA;
+    background-color: #8BffA1;
 }
 
 .systemon {
@@ -31,15 +31,6 @@
 .fix-bars {
     font-size: 22px;
     padding: 19px;
-}
-
-.striped div {
-    padding: 4px;
-}
-
-.striped :nth-child(n+3) {
-    background-color: #F8F8F8 !important;
-    color: black !important;
 }
 
 .sprinkler-table {
