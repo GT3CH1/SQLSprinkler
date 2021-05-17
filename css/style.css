@@ -19,18 +19,15 @@
 
 .systemoff {
     background-color: #BFFFCA;
-
 }
 
 .systemon {
     background-color: #FCFF90;
-
 }
 
 .programon, .programoff, .systemon, .systemoff {
     outline: none;
     color: #707070;
-
 }
 
 .fix-bars {
