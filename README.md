@@ -47,7 +47,6 @@
 #### TODO
 * Write a script to run setup automatically.
 * Add a user to run python commands.
-* Convert the settings table to pure html and javascript.
 * Add a day schedule (like A and B days) (?)
 * Add a script to allow user to control when the system automatically runs (cron) (?)
 * Better mobile support
