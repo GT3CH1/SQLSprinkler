@@ -1,4 +1,6 @@
 <?php
+/* Copyright 2021 Gavin Pease */
+
 /* Begin block for API calls */
 include('sql.php');
 $sqlquery = new doSQL();

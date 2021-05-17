@@ -1,7 +1,10 @@
+/* Copyright 2021 Gavin Pease */
+
 .mybutton {
     width: 125px;
     height: 60px;
     font-size: 1.25em;
+    padding-right: 8px;
 }
 
 /*System/program on is for when the text displays "on"*/
@@ -17,18 +20,15 @@
 
 .systemoff {
     background-color: #BFFFCA;
-
 }
 
 .systemon {
     background-color: #FCFF90;
-
 }
 
 .programon, .programoff, .systemon, .systemoff {
     outline: none;
     color: #707070;
-
 }
 
 .fix-bars {

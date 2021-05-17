@@ -1,3 +1,14 @@
+<?php
+// Copyright 2021 Gavin Pease
+include('../lib/sql.php');
+$sqlquery = new doSQL();
+$sqlquery->doSQLStuff("SELECT * FROM `Systems`");
+$id = $sqlquery->ids;
+$names = $sqlquery->names;
+$times = $sqlquery->times;
+$gpios = $sqlquery->gpios;
+?>
+
 <html>
 <head>
     <meta charset="utf-8">

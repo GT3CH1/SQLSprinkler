@@ -1,3 +1,4 @@
+// Copyright 2021 Gavin Pease
 var system_status = "";
 let system_enable;
 let loadTable = true;

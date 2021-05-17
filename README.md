@@ -1,10 +1,19 @@
 ## A lightweight web page to control sprinkler systems on a raspberry pi.
+![Main page](img/main.png)  
 
+![System Settings](img/settings.png)  
+  
+![System Configuration](img/config.png)
 
+### FEATURES
+* Easy to use interface.
+* Quick set up.
+* Mobile support.
+* Customizable sprinkler name and run time.
+* Automatic running of the schedule (each zone from top to bottom.)
+* Automatic shut off of sprinklers that are turned on from web page
 
 ### SETUP
-
-
 
 - On debian, run the following command (after updating):
   `# apt install apache2 php libapache2-mod-php php-mysql composer mariadb-server cron`
@@ -42,6 +51,9 @@
 * Add a day schedule (like A and B days) (?)
 * Add a script to allow user to control when the system automatically runs (cron) (?)
 * Better mobile support
+* Per-system auto off 
+* Web interface run time configuration(?)
+* Schedule builder (?)
 
 ### DEPENDENCIES
 #### Back-end
@@ -61,14 +73,22 @@
 #### Front-end
 -   jquery
 -   w3.css
+-   Font Awesome
 
 ### REQUIREMENTS
 
 -   A raspberry pi running buster or better
 -   A stable internet connection
 
+### ADDITIONAL INFORMATION
+* There can only be one system running at a time.
+* As of now, all systems configured to automatically shut off if turned on from the web page after their respective run time has elapsed
+* This system relies on relays to control the sprinkler system (one relay per system)
+    * General knowledge of how to wire an electrical system is required.
+        * Please be careful while handling electricity. I am not responsible for anything. 
 
 
+Copyright 2021 Gavin Pease
 
 
 
