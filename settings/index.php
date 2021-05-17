@@ -23,8 +23,7 @@ $gpios = $sqlquery->gpios;
     <script src="../js/settings.js"></script>
 </head>
 <body>
-<div class="w3-display-topmiddle w3-threequarter w3-mobile w3-padding-small" id="table">
-    <table class="w3-table-all w3-centered sprinkler-table">
+    <table class="w3-table-all w3-centered sprinkler-table w3-display-topmiddle w3-threequarter w3-mobile" id="table">
         <tr>
             <th>Zone</th>
             <th>Name</th>
@@ -50,7 +49,6 @@ $gpios = $sqlquery->gpios;
             }
             ?>
     </table>
-</div>
 <div class="w3-display-bottomleft w3-center w3-flat-silver w3-dropdown-hover " style="position:fixed;">
     <a href="javascript:void(0);" id="menuopen" class="w3-button fix-bars"> <i style="z-index: 5;"
                                                                                class="fa fa-bars w3-display-middle"></i></a>
