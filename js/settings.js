@@ -1,45 +1,54 @@
 // Copyright 2021 Gavin Pease
 system_status = "";
-system_id = "";
+loadTable = true;
 
-$.urlParam = function (name) {
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    return ((results == null) ? null : results[1] || 0);
-}
-
-function getSystemStatus(){
+function getSystemStatus() {
+    system_status = "";
     $.get('../lib/api.php?systems', function (data, textStatus, jqXHR) {
+    }).done(function (data) {
         system_status = JSON.parse(data);
+        buildSystemTable();
+        updateSystemTable();
+        console.log("Done receiving sprinkler data.");
     });
 }
 
 $(document).ready(function () {
     window.deleteMode = false;
     getSystemStatus();
-    $("button").click(function () {
-        var id = $(this).attr("id");
-        if ($(this).val() == "edit")
-            getData(id, false);
-        if($(this).val() == "delete"){
-            idToDel = system_status[id]['id'];
-            var wantsToDelete = confirm("Are you sure you want to delete zone " + (parseInt(id)+1) + "?");
-            if(!wantsToDelete)
-                return;
-            window.deleteMode = true;
-            submitChanges(idToDel,"","","","");
-        }
-    });
     $("#add").click(function () {
         getData(-1, true);
+    });
+    $("#back").click(function () {
+        fadeEditOut();
+    })
+    $("body").delay(100).fadeIn(250);
+    $("#settings-submit").click(function () {
+        runtime = $("#zone-runtime").val();
+        name = $("#zone-name").val();
+        gpio = $("#zone-gpio").val();
+        if (runtime == "")
+            runtime = 10;
+        if (name == "")
+            name = "Change me";
+        var addMode = window.addMode;
+        if (addMode) {
+            submitChanges("", name, gpio, runtime);
+        } else {
+            var id = $("#system").val();
+            console.log(id);
+            submitChanges(id, name, gpio, runtime);
+        }
     });
 });
 
 function getData(id, add) {
-    system_id = id;
     $("#table").fadeOut(500);
-    $("#edit").load("edit.html");
     if (add) {
         window.addMode = true;
+        $("#zone-name").val('');
+        $("#zone-gpio").val('');
+        $("#zone-runtime").val('');
     } else {
         setTimeout(function () {
             $("#zone-name").val(system_status[id]["zonename"]);
@@ -50,7 +59,7 @@ function getData(id, add) {
             window.addMode = false;
         }, 250);
     }
-    $("#edit").delay(250).fadeIn(500);
+    $("#edit").fadeIn(500);
 }
 
 function submitChanges(id, zonename, gpio, runtime) {
@@ -67,27 +76,82 @@ function submitChanges(id, zonename, gpio, runtime) {
     } else {
         data = {
             call: "update",
-            zone: id,
+            id: id,
             name: zonename,
             gpio: gpio,
             runtime: runtime
         };
     }
-    if(deleteMode){
+    if (deleteMode) {
         data = {
             call: "delete",
-            zone: id
+            id: id
         }
     }
-    console.log(data);
     $.post("../lib/api.php", data).done(function (data) {
         console.log("Received data: " + data);
-        doCloseWindow();
+        setTimeout(getSystemStatus, 10);
+        fadeEditOut();
     });
 }
 
-function doCloseWindow(){
+function fadeEditOut() {
     $("#edit").fadeOut(500);
     $("#table").fadeIn(500);
-    getSystemStatus();
+}
+
+function createEditRow(index) {
+    let tr = "";
+    let id = system_status[index]['id'];
+    tr += "<tr>";
+    tr += "<td id='zone-" + id + "-index'></td>";
+    tr += "<td id='zone-" + id + "-name'></td>";
+    tr += "<td id='zone-" + id + "-time'></td>";
+    tr += "<td>";
+    tr += "<button id ='zone-" + id + "-edit' class='w3-button w3-gray w3-round-large' value='" + index + "'>Edit</button>";
+    tr += "&nbsp;&nbsp;"
+    tr += "<button id ='zone-" + id + "-delete' class='w3-button w3-red w3-round-large' value='" + index + "'>Delete</button>";
+    tr += "</td>";
+    tr += "</tr>";
+    return tr;
+}
+
+function setButtonListener() {
+    $("button").click(function () {
+        let editMode = $(this).attr("id").indexOf('edit') > -1;
+        let deleteMode = $(this).attr("id").indexOf('delete') > -1;
+        let val = $(this).val();
+        if (editMode)
+            getData(val, false);
+        else if (deleteMode) {
+            idToDel = system_status[val]['id'];
+            var wantsToDelete = confirm("Are you sure you want to delete zone " + (parseInt(val) + 1) + "?");
+            if (!wantsToDelete)
+                return;
+            window.deleteMode = true;
+            submitChanges(idToDel, "", "", "", "");
+        }
+    });
+}
+
+function buildSystemTable() {
+    $("#table").html('<tr><th>Zone</th><th>Name</th><th>Run Time</th><th>Actions</th></tr>');
+    updateSystemTable();
+    setButtonListener();
+}
+
+function updateSystemTable() {
+    for (let i = 0; i < system_status.length; i++) {
+        let currSprinkler = system_status[i];
+        let currName = currSprinkler['zonename'];
+        let currTime = currSprinkler['runtime'];
+        let currZone = i + 1;
+        let id = currSprinkler['id'];
+        let zoneExists = $("#zone-" + id + "-index").length != 0;
+        if (!zoneExists)
+            $("#table").append(createEditRow(i));
+        $("#zone-" + id + "-index").html(currZone);
+        $("#zone-" + id + "-name").html(currName);
+        $("#zone-" + id + "-time").html(currTime);
+    }
 }
