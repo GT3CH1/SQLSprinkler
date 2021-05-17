@@ -10,6 +10,7 @@ function getSystemStatus() {
         buildSystemTable();
         updateSystemTable();
         console.log("Done receiving sprinkler data.");
+        $("#settings-table").delay(100).fadeIn(250);
     });
 }
 
@@ -22,7 +23,6 @@ $(document).ready(function () {
     $("#back").click(function () {
         fadeEditOut();
     })
-    $("body").delay(100).fadeIn(250);
     $("#settings-submit").click(function () {
         runtime = $("#zone-runtime").val();
         name = $("#zone-name").val();
@@ -108,9 +108,9 @@ function createEditRow(index) {
     tr += "<td id='zone-" + id + "-name'></td>";
     tr += "<td id='zone-" + id + "-time'></td>";
     tr += "<td>";
-    tr += "<button id ='zone-" + id + "-edit' class='w3-button w3-gray w3-round-large' value='" + index + "'>Edit</button>";
+    tr += "<button id ='zone-" + id + "-edit' class='w3-button  w3-gray w3-round-xlarge' value='" + index + "'>Edit</button>";
     tr += "&nbsp;&nbsp;"
-    tr += "<button id ='zone-" + id + "-delete' class='w3-button w3-red w3-round-large' value='" + index + "'>Delete</button>";
+    tr += "<button id ='zone-" + id + "-delete' class='w3-button  w3-red w3-round-xlarge' value='" + index + "'>Delete</button>";
     tr += "</td>";
     tr += "</tr>";
     return tr;

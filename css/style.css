@@ -36,6 +36,7 @@
 .sprinkler-table {
     table-layout: auto;
     font-size: 1.25em;
+    display: none;
 }
 
 .sprinkler-table th, tr td {

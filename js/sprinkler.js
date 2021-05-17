@@ -48,7 +48,7 @@ function getSprinklers() {
 }
 
 $(document).ready(function () {
-    $("body").delay(1750).fadeIn(250);
+    $("#sprinklerData").delay(1750).fadeIn(250);
     $("#menuopen").click(function () {
         $("#menuopen").fadeOut(250, function () {
             $('#menunav').fadeIn(250);
