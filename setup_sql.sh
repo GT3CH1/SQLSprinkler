@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright 2021 Gavin Pease
+
 source .env
 mysql -u $SQLSPRINKLER_USER --password=$SQLSPRINKLER_PASS -h $SQLSPRINKLER_SQL_HOST -e "
 CREATE DATABASE $SQLSPRINKLER_DB;

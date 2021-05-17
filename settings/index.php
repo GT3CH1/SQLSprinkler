@@ -1,5 +1,5 @@
 <?php
-
+// Copyright 2021 Gavin Pease
 include('../lib/sql.php');
 $sqlquery = new doSQL();
 $sqlquery->doSQLStuff("SELECT * FROM `Systems`");

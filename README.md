@@ -88,6 +88,7 @@
         * Please be careful while handling electricity. I am not responsible for anything. 
 
 
+Copyright 2021 Gavin Pease
 
 
 

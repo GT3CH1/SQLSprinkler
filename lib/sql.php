@@ -1,18 +1,5 @@
 <?php
-
-/*
-    How to use:
-
-    include('lib/sql.php');
-    $sqlquery = new doSQL();
-    $sqlquery->doSQLStuff("SELECT * FROM `Games`");
-    $games = $sqlquery->get_names();
-    $services = $sqlquery->get_sns();
-    $directories = $sqlquery->get_dirs();
-    $id = $sqlquery->get_id();
-
-*/
-
+/* Copyright 2021 Gavin Pease*/
 class doSQL
 {
 

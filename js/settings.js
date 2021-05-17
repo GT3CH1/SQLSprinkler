@@ -1,16 +1,18 @@
+// Copyright 2021 Gavin Pease
 system_status = "";
 system_id = "";
-
 
 $.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return ((results == null) ? null : results[1] || 0);
 }
+
 function getSystemStatus(){
     $.get('../lib/api.php?systems', function (data, textStatus, jqXHR) {
         system_status = JSON.parse(data);
     });
 }
+
 $(document).ready(function () {
     window.deleteMode = false;
     getSystemStatus();

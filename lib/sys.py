@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright 2021 Gavin Pease
+
 import sys
 import RPi.GPIO as GPIO
 import pymysql as sql
