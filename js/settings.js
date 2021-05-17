@@ -43,7 +43,7 @@ $(document).ready(function () {
 });
 
 function getData(id, add) {
-    $("#table").fadeOut(500);
+    $("#settings-table").fadeOut(500);
     if (add) {
         window.addMode = true;
         $("#zone-name").val('');
@@ -97,7 +97,7 @@ function submitChanges(id, zonename, gpio, runtime) {
 
 function fadeEditOut() {
     $("#edit").fadeOut(500);
-    $("#table").fadeIn(500);
+    $("#settings-table").fadeIn(500);
 }
 
 function createEditRow(index) {
@@ -135,7 +135,7 @@ function setButtonListener() {
 }
 
 function buildSystemTable() {
-    $("#table").html('<tr><th>Zone</th><th>Name</th><th>Run Time</th><th>Actions</th></tr>');
+    $("#settings-table").html('<tr><th>Zone</th><th>Name</th><th>Run Time</th><th>Actions</th></tr>');
     updateSystemTable();
     setButtonListener();
 }
@@ -149,7 +149,7 @@ function updateSystemTable() {
         let id = currSprinkler['id'];
         let zoneExists = $("#zone-" + id + "-index").length != 0;
         if (!zoneExists)
-            $("#table").append(createEditRow(i));
+            $("#settings-table").append(createEditRow(i));
         $("#zone-" + id + "-index").html(currZone);
         $("#zone-" + id + "-name").html(currName);
         $("#zone-" + id + "-time").html(currTime);
