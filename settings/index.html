@@ -1,0 +1,59 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SQLSprinkler</title>
+    <link href="../css/w3.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/w3-flat.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/style.css" type="text/css" rel="stylesheet"/>
+    <script src="https://kit.fontawesome.com/e00a151875.js" crossorigin="anonymous"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/sprinkler.js"></script>
+    <script src="../js/settings.js"></script>
+</head>
+<body style="display: none;">
+<table class="w3-table-all w3-centered sprinkler-table w3-display-topmiddle w3-threequarter w3-mobile" id="table">
+    <tr>
+        <th>Zone</th>
+        <th>Name</th>
+        <th>Run Time</th>
+        <th>Actions</th>
+    </tr>
+</table>
+<div class="w3-display-bottomleft w3-center w3-flat-silver w3-dropdown-hover " style="position:fixed;">
+    <a href="javascript:void(0);" id="menuopen" class="w3-button fix-bars"> <i style="z-index: 5;"
+                                                                               class="fa fa-bars w3-display-middle"></i></a>
+    <div style="display: none;" id="menunav">
+        <a id="menuclose" class="w3-button"><i style="z-index: 5;" class="fa fa-times"></i></a>
+        <a href="../" class="w3-button"><i style="z-index: 5;" class="fa fa-home"></i></a>
+        <a id="add" class="w3-button"><i style="z-index: 5;" class="fas fa-plus"></i></a>
+    </div>
+</div>
+<div id="edit" style="display:none;">
+    <div class="w3-display-topmiddle w3-threequarter w3-padding-16 w3-padding-small edit-page">
+        <div id="settings" class="w3-rest w3-padding ">
+            <div id="zone-name-details" class="subsetting">
+                <span class="setting-label">Zone Name</span>
+                <input type="text" class="settings-input" id="zone-name" placeholder="Change me" required/>
+            </div>
+            <hr>
+            <div id="zone-gpio-details" class="subsetting">
+                <span class="setting-label">Zone GPIO</span>
+                <input type="number" class="settings-input" max="40" min="1" id="zone-gpio" required/>
+            </div>
+            <hr>
+            <div id="zone-runtime-details" class="subsetting">
+                <span class="setting-label">Zone Runtime</span>
+                <input type="number" class="settings-input" min="0" max="180" id="zone-runtime" placeholder="10"
+                       required/>
+            </div>
+            <br>
+            <input type="number" hidden id="system">
+            <button style="float: right;" class="w3-button w3-round-xxlarge programon" id="settings-submit">Submit
+            </button>
+            <a id="back" style="float:left;" class="w3-button w3-round-xxlarge programon">Back</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
