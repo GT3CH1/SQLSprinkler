@@ -68,10 +68,10 @@ if (isset($_POST['call'])) {
     $callType = $_POST['call'];
     if ($callType == "update") {
         $gpio = $_POST['gpio'];
-        $zone = $_POST['zone'];
+        $id = $_POST['id'];
         $name = $_POST['name'];
         $runtime = $_POST['runtime'];
-        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime . " WHERE id=" . $zone;
+        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime . " WHERE id=" . $id;
         $sqlquery->querySQL($query);
         echo $query;
     }
@@ -82,8 +82,8 @@ if (isset($_POST['call'])) {
         $sqlquery->querySQL("INSERT INTO `Systems` (`Name`, `GPIO`, `Time`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "')");
     }
     if ($callType == "delete") {
-        $zone = $_POST['zone'];
-        $sqlquery->querySQL("DELETE FROM `Systems` WHERE `id` = " . $zone);
+        $id = $_POST['id'];
+        $sqlquery->querySQL("DELETE FROM `Systems` WHERE `id` = " . $id);
     }
 }
 ?>
