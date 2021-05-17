@@ -24,17 +24,7 @@
 * Once you verify that apache is running properly, navigate to your phpmyadmin page, and create a database called `SQLSprinkler`
   * (**Recommended**) You may wish to create a user that only has access to this database.
     * The user must have INSERT, UPDATE, DELETE, SELECT and CREATE permissions.
-  1) Update the `.env` file to contain the username and password of the user you used to edit the database.
-     * The file must contain the following variables
-        * SQLSPRINKLER_SQL_HOST
-          * The host of the sql database.
-        * SQLSPRINKLER_DB
-          * The name of the database to use.
-        * SQLSPRINKLER_USER
-          * The username to access the database.
-        * SQLSPRINKLER_PASS
-          * The password for the user.
-      
+  1) Update the `.env-sample` file to contain the username and password of the user you used to edit the database, save it as `.env`.
   2) Run `compose install` in the project root directory
       - You may need to install composer with the following commands if your system does not have a package for it
         - `wget -O composer-setup.php https://getcomposer.org/installer`
