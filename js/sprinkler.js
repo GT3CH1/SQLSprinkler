@@ -9,11 +9,9 @@ function getSprinklerData() {
         if (system_enable) {
             $("#schedule").html("On");
             $("#schedule-btn-txt").html("Off");
-            $("#schedule-btn").removeClass("programoff");
-            $("#schedule-btn").addClass("programon");
+            $("#schedule-btn").removeClass("programoff").addClass("programon");
         } else {
-            $("#schedule-btn").removeClass("programon");
-            $("#schedule-btn").addClass("programoff");
+            $("#schedule-btn").removeClass("programon").addClass("programoff").fadeIn('fast');
             $("#schedule").html("Off");
             $("#schedule-btn-txt").html("On");
         }
@@ -35,16 +33,15 @@ function getSprinklers() {
         let name_id;
         for (i = 0; i < system_status.length; i++) {
             button_id = system_status[i]["gpio"];
-            // This line is horrid.
-            name_id = (system_status[i]["status"].charAt(0).toUpperCase() + system_status[i]["status"].slice(1)) == "Off" ? "On" : "Off";
+            name_id = system_status[i]["status"] == "off" ? "On" : "Off";
             document.getElementById("status-" + i).innerHTML = ((name_id == "On") ? "Off" : "On");
             document.getElementById("status-button-" + i).innerHTML = name_id;
             if (name_id == "Off") {
-                $("#" + button_id).removeClass("systemoff")
-                $("#" + button_id).addClass("systemon")
+                $("#" + button_id).removeClass("systemoff").fadeIn(150);
+                $("#" + button_id).addClass("systemon").fadeIn(150);
             } else {
-                $("#" + button_id).removeClass("systemon")
-                $("#" + button_id).addClass("systemoff")
+                $("#" + button_id).removeClass("systemon").fadeIn(150);
+                $("#" + button_id).addClass("systemoff").fadeIn(150);
             }
         }
     }, 1000);
