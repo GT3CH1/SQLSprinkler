@@ -11,7 +11,7 @@ function getSprinklerData() {
             $("#schedule-btn-txt").html("Off");
             $("#schedule-btn").removeClass("programoff").addClass("programon");
         } else {
-            $("#schedule-btn").removeClass("programon").addClass("programoff").fadeIn('fast');
+            $("#schedule-btn").removeClass("programon").addClass("programoff");
             $("#schedule").html("Off");
             $("#schedule-btn-txt").html("On");
         }
