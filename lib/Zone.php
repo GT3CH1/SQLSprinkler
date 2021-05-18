@@ -23,7 +23,7 @@ class Zone
      */
     public function __construct($name, $gpio, $runtime, $enabled, $autooff, $id)
     {
-        $status = boolval(exec(' which gpio && gpio -g read ' . $gpio . ' || echo 1'));
+        $status = !boolval(exec(' which gpio && gpio -g read ' . $gpio . ' || echo 1'));
         $json = (object)array();
         $json->name = $name;
         $json->gpio = intval($gpio);

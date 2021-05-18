@@ -44,21 +44,25 @@ if (isset($_GET['systemstatus'])) {
 
 /* Begin block for submit files */
 $dir = getcwd() . "/";
-if (isset($_GET['on'])) {
-    $run = $_GET['on'];
-    exec("sudo " . $dir . "off.py");
-    exec("sudo " . $dir . "on.py " . $run . " & ");
-    echo "Running... " . $run . " -> " . $dir;
-}
-if (isset($_GET['off'])) {
-    exec("sudo " . $dir . "off.py");
-    echo "Turning off. " . $_GET['off'] . " ->" . $dir;
+if (isset($_POST['state'])) {
+    switch ($_POST['state']) {
+        case "on":
+            $run = $_POST['gpio'];
+            exec("sudo " . $dir . "off.py");
+            exec("sudo " . $dir . "on.py " . $run . " & ");
+            echo "Running... " . $run . " -> " . $dir;
+            break;
+        default:
+            exec("sudo " . $dir . "off.py");
+            echo "Turning off. ";
+            break;
+    }
+
 }
 if (isset ($_GET['systemenable'])) {
     $val = (($_GET['systemenable']) == "false" ? 0 : 1);
     echo $val;
     $test = $sqlquery->querySQL("UPDATE Enabled set enabled=" . $val . ";");
-    var_dump($test);
 }
 if (isset ($_GET['update'])) {
     $test = shell_exec('/usr/bin/git fetch');
@@ -95,4 +99,4 @@ if (isset($_POST['call'])) {
     }
     echo $query;
 }
-?>
+

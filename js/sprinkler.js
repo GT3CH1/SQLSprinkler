@@ -31,7 +31,7 @@ function updateZoneTable() {
         let name_id, i;
         for (i = 0; i < zoneStatus.length; i++) {
             button_id = zoneStatus[i]["gpio"];
-            name_id = zoneStatus[i]["status"] === "off" ? "On" : "Off";
+            name_id = !zoneStatus[i]["status"] ? "On" : "Off";
             document.getElementById("status-button-" + i).innerHTML = name_id;
             if (name_id === "Off")
                 $("#" + button_id).removeClass("systemoff").addClass("systemon");
@@ -84,8 +84,8 @@ function buildZoneTable() {
         let gpio = zoneData['gpio'];
         let enabled = zoneData['enabled'] ? "" : "unscheduled";
         let autooff = zoneData['autooff'] ? "" : "italic"
-        let on = zoneData['status'] === "on" ? "Off" : "On";
-        let zoneCss = zoneData['status'] === "on" ? "systemon" : "systemoff";
+        let on = zoneData['status'] ? "Off" : "On";
+        let zoneCss = zoneData['status'] ? "systemon" : "systemoff";
         tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name " + autooff + " " + enabled + "'>Zone " + (i + 1) + "</p>"
         tr += "<p> " + name + " </p></div></td>"
         tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='sendData(" + i + ");";
@@ -98,12 +98,17 @@ function buildZoneTable() {
 
 function sendData(index) {
     let xhttp = new XMLHttpRequest();
-    const toggle = ((zoneStatus[index]["status"] === "on") ? "off" : "on");
-    const info = toggle + "=" + zoneStatus[index]["gpio"];
-    xhttp.open("GET", "lib/api.php?" + info, true);
-    console.log("sending");
-    console.log(info);
-    xhttp.send();
+    const toggle = ((zoneStatus[index]["status"]) ? "off" : "on");
+    let gpio = zoneStatus[index]["gpio"];
+    data = {
+        gpio: gpio,
+        state: toggle
+    }
+    console.log(data);
+    $.post('lib/api.php',data).done(function(returns){
+        console.log(returns);
+    });
+
 }
 
 
