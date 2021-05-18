@@ -3,6 +3,7 @@
 
 /* Begin block for API calls */
 include('sql.php');
+include('Zone.php');
 $sqlquery = new doSQL();
 
 if (isset($_GET['systems'])) {
@@ -15,18 +16,16 @@ if (isset($_GET['systems'])) {
     $autooffs = $sqlquery->autooffs;
     $array = array();
     for ($i = 0; $i < sizeof($id); $i++) {
-        $value = exec(' which gpio && gpio -g read ' . $gpios[$i] . ' || echo 1');
-        $array[$i] = (object)array();
-        $array[$i]->gpio = $gpios[$i];
-        $array[$i]->status = ($value == 0 ? "on" : "off");
-        $array[$i]->zonename = $names[$i];
-        $array[$i]->runtime = $runtimes[$i];
-        $array[$i]->enabled = $enableds[$i] == "1";
-        $array[$i]->autooff = boolval($autooffs[$i]);
-        $array[$i]->id = $id[$i];
+        $gpio = $gpios[$i];
+        $zonename = $names[$i];
+        $runtime = $runtimes[$i];
+        $enabled = $enableds[$i] == "1";
+        $autooff = boolval($autooffs[$i]);
+        $currId = $id[$i];
+        $zone = new Zone($zonename,$gpio,$runtime,$enabled,$autooff,$currId);
+        array_push($array, $zone->getData());
     }
-    $json = json_encode($array);
-    echo $json;
+    echo json_encode($array);
 }
 
 if (isset($_GET['systemstatus'])) {
