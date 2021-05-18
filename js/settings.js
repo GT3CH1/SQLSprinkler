@@ -48,15 +48,15 @@ function submitChanges() {
     let zonename = $("#zone-name").val();
     let gpio = $("#zone-gpio").val();
     let scheduled = $("#zone-enabled").prop('checked');
-    if (runtime == "")
+    if (runtime === "")
         runtime = 10;
-    if (zonename == "")
+    if (zonename === "")
         zonename = "Change me";
 
     let addMode = window.addMode;
     let deleteMode = window.deleteMode;
     let data;
-    if(gpio == "" || gpio > 40) {
+    if(gpio === "" || gpio > 40) {
         alert("You must set a proper GPIO pin!");
         return;
     }
@@ -113,8 +113,7 @@ function createEditRow(index) {
 }
 
 function setButtonListener() {
-    $("button").unbind();
-    $("button").click(function () {
+    $("button").unbind().click(function () {
         let editMode = $(this).attr("id").indexOf('edit') > -1;
         let deleteMode = $(this).attr("id").indexOf('delete') > -1;
         let val = $(this).val();
@@ -152,7 +151,7 @@ function updateSystemTable() {
         let currTime = currSprinkler['runtime'];
         let currZone = i + 1;
         let id = currSprinkler['id'];
-        let zoneExists = $("#zone-" + id + "-index").length != 0;
+        let zoneExists = $("#zone-" + id + "-index").length !== 0;
         if (!zoneExists)
             $("#settings-table").append(createEditRow(i));
         $("#zone-" + id + "-index").html(currZone);
