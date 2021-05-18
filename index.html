@@ -11,10 +11,10 @@
     <script src="js/jquery.js"></script>
     <script src="js/sprinkler.js"></script>
 </head>
-<body style="display:none;" onload="getSprinklers();">
+<body onload="getSprinklers();" class="w3-light-gray">
 <div>
     <br>
-    <table class="w3-table w3-table-all sprinkler-table w3-threequarter w3-display-topmiddle" id="sprinklerData">
+    <table class="w3-table w3-table-all sprinkler-table w3-threequarter w3-display-topmiddle sprinkler-table" id="sprinklerData">
         <div id="notification" style="display: none;font-size: .75em;padding:16px;z-index: 100"
              class="w3-card-4 w3-white w3-display-middle">
             <span id="notification-text"></span>
@@ -24,12 +24,11 @@
             <td>
                 <div class="w3-rest" style="float:left;">
                     <p style="font-weight: bold">System Schedule</p>
-                    <p>Status: <span id="schedule"></span></p>
                 </div>
             </td>
             <td>
                 <button id="schedule-btn"
-                        class="w3-button programoff w3-round-xxlarge w3-centered mybutton sprinkler-button">Turn
+                        class="w3-button programoff w3-round-xxlarge w3-centered mybutton sprinkler-button">
                     <span id="schedule-btn-txt">Off</span>
                 </button>
             </td>

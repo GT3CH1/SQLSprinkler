@@ -11,14 +11,9 @@
     <script src="../js/sprinkler.js"></script>
     <script src="../js/settings.js"></script>
 </head>
-<body style="display: none;">
-<table class="w3-table-all w3-centered sprinkler-table w3-display-topmiddle w3-threequarter w3-mobile" id="table">
-    <tr>
-        <th>Zone</th>
-        <th>Name</th>
-        <th>Run Time</th>
-        <th>Actions</th>
-    </tr>
+<body class="w3-light-gray">
+<table class="w3-table-all w3-centered sprinkler-table w3-display-topmiddle w3-threequarter w3-mobile"
+       id="settings-table">
 </table>
 <div class="w3-display-bottomleft w3-center w3-flat-silver w3-dropdown-hover " style="position:fixed;">
     <a href="javascript:void(0);" id="menuopen" class="w3-button fix-bars"> <i style="z-index: 5;"
@@ -30,7 +25,7 @@
     </div>
 </div>
 <div id="edit" style="display:none;">
-    <div class="w3-display-topmiddle w3-threequarter w3-padding-16 w3-padding-small edit-page">
+    <div class="w3-display-topmiddle w3-threequarter edit-page w3-white">
         <div id="settings" class="w3-rest w3-padding ">
             <div id="zone-name-details" class="subsetting">
                 <span class="setting-label">Zone Name</span>
@@ -48,10 +43,24 @@
                        required/>
             </div>
             <br>
-            <input type="number" hidden id="system">
-            <button style="float: right;" class="w3-button w3-round-xxlarge programon" id="settings-submit">Submit
+            <hr>
+            <div id="zone-enabled-details" class="subsetting">
+                <span class="setting-label">Zone Scheduled</span>
+                <input type="checkbox" class="settings-input w3-check" min="0" max="180" id="zone-enabled"
+                       placeholder="10"
+                       required/>
+            </div>
+            <br>
+            <br>
+            <input type="number" hidden id="system-id">
+            <input type="number" hidden id="system-number">
+            <span style="float: right">
+                <button id="back" class="w3-button w3-round-xxlarge systemoff">Back</button>
+                &nbsp;
+                <button class="w3-button w3-round-xxlarge systemon" id="settings-submit">Submit</button>
+            </span>
+            <button id='zone-delete' style="float:left;" class='w3-button w3-flat-alizarin w3-round-xlarge'>Delete
             </button>
-            <a id="back" style="float:left;" class="w3-button w3-round-xxlarge programon">Back</a>
         </div>
     </div>
 </div>

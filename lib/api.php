@@ -11,6 +11,7 @@ if (isset($_GET['systems'])) {
     $id = $sqlquery->ids;
     $names = $sqlquery->names;
     $runtimes = $sqlquery->times;
+    $enableds = $sqlquery->enableds;
     $array = array();
     for ($i = 0; $i < sizeof($id); $i++) {
         $value = exec(' which gpio && gpio -g read ' . $gpios[$i] . ' || echo 1');
@@ -19,6 +20,7 @@ if (isset($_GET['systems'])) {
         $array[$i]->status = ($value == 0 ? "on" : "off");
         $array[$i]->zonename = $names[$i];
         $array[$i]->runtime = $runtimes[$i];
+        $array[$i]->enabled = $enableds[$i] == "1";
         $array[$i]->id = $id[$i];
     }
     $json = json_encode($array);
@@ -71,7 +73,8 @@ if (isset($_POST['call'])) {
         $id = $_POST['id'];
         $name = $_POST['name'];
         $runtime = $_POST['runtime'];
-        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime . " WHERE id=" . $id;
+        $enabled = $_POST['scheduled'];
+        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime . ", `Enabled`=" . $enabled . " WHERE id=" . $id;
         $sqlquery->querySQL($query);
         echo $query;
     }
@@ -79,7 +82,8 @@ if (isset($_POST['call'])) {
         $gpio = $_POST['gpio'];
         $name = $_POST['name'];
         $runtime = $_POST['runtime'];
-        $sqlquery->querySQL("INSERT INTO `Systems` (`Name`, `GPIO`, `Time`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "')");
+        $enabled = $_POST['scheduled'];
+        $sqlquery->querySQL("INSERT INTO `Systems` (`Name`, `GPIO`, `Time`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "','" . $enabled . "')");
     }
     if ($callType == "delete") {
         $id = $_POST['id'];

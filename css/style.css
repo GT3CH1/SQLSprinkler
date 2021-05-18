@@ -7,25 +7,18 @@
 }
 
 /*System/program on is for when the text displays "on"*/
-.programon {
-    background-color: #A5D2FF;
-}
-
-.programoff {
-    background-color: #FFBBBB;
-}
-
 .systemoff {
-    background-color: #BFFFCA;
+    background-color: #FF8B8B;
 }
 
 .systemon {
-    background-color: #FCFF90;
+    background-color: #8BffA1;
 }
 
-.programon, .programoff, .systemon, .systemoff {
+
+.systemon, .systemoff {
     outline: none;
-    color: #707070;
+    color: #505050;
 }
 
 .fix-bars {
@@ -33,18 +26,10 @@
     padding: 19px;
 }
 
-.striped div {
-    padding: 4px;
-}
-
-.striped :nth-child(n+3) {
-    background-color: #F8F8F8 !important;
-    color: black !important;
-}
-
 .sprinkler-table {
     table-layout: auto;
     font-size: 1.25em;
+    display: none;
 }
 
 .sprinkler-table th, tr td {
@@ -68,10 +53,6 @@
     margin-right: 8px;
 }
 
-table {
-    margin-top: 32px;
-}
-
 .settings-input {
     outline: none !important;
     float: right;
@@ -79,12 +60,16 @@ table {
     border-right-style: hidden;
     border-left-style: hidden;
     max-width: 50%;
+    text-align: right;
 }
 
 .subsetting {
     margin: 10px;
     padding-bottom: 30px;
     padding-top: 30px;
+}
+.unscheduled{
+    color: #ff414f;
 }
 
 .setting-label {
@@ -95,5 +80,4 @@ table {
 .edit-page {
     font-size: 1.25em;
     display: block !important;
-    margin-top: 32px;
 }

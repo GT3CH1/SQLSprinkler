@@ -8,12 +8,12 @@ function getSprinklerData() {
         system_enable = JSON.parse(data)["systemstatus"] == "1";
         if (system_enable) {
             $("#schedule").html("On");
-            $("#schedule-btn-txt").html("Off");
-            $("#schedule-btn").removeClass("programoff").addClass("programon");
+            $("#schedule-btn-txt").html("Enabled");
+            $("#schedule-btn").removeClass("systemoff").addClass("systemon");
         } else {
-            $("#schedule-btn").removeClass("programon").addClass("programoff");
+            $("#schedule-btn").removeClass("systemon").addClass("systemoff");
             $("#schedule").html("Off");
-            $("#schedule-btn-txt").html("On");
+            $("#schedule-btn-txt").html("Disabled");
         }
     });
     $.get('lib/api.php?systems', function () {
@@ -34,7 +34,6 @@ function getSprinklers() {
         for (i = 0; i < system_status.length; i++) {
             button_id = system_status[i]["gpio"];
             name_id = system_status[i]["status"] == "off" ? "On" : "Off";
-            document.getElementById("status-" + i).innerHTML = ((name_id == "On") ? "Off" : "On");
             document.getElementById("status-button-" + i).innerHTML = name_id;
             if (name_id == "Off") {
                 $("#" + button_id).removeClass("systemoff").fadeIn(150);
@@ -48,7 +47,7 @@ function getSprinklers() {
 }
 
 $(document).ready(function () {
-    $("body").delay(1750).fadeIn(250);
+    $("#sprinklerData").delay(1750).fadeIn(250);
     $("#menuopen").click(function () {
         $("#menuopen").fadeOut(250, function () {
             $('#menunav').fadeIn(250);
@@ -84,13 +83,14 @@ $(document).ready(function () {
 });
 
 function createTable() {
-    let tr ="";
+    let tr = "";
     console.log(system_status.length)
     for (i = 0; i < system_status.length; i++) {
         let sprinklerInfo = system_status[i];
         let name = sprinklerInfo['zonename'];
         let gpio = sprinklerInfo['gpio'];
-        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name'>Zone " + (i + 1) + "</p><p> " + name + " </p><p>Status: <span id='status-" + i + "'>Off</span></p> </div></td>"
+        let enabled = sprinklerInfo['enabled'] ? "" : "unscheduled";
+        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name "+enabled+"'>Zone " + (i + 1) + "</p><p> " + name + " </p></div></td>"
         tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + "); return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>Turn <span id='status-button-" + i + "'>Off</span></button> </div></td></tr>"
     }
     $("#sprinklerData").append(tr);
