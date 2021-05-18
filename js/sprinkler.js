@@ -47,7 +47,6 @@ function getSprinklers() {
 }
 
 $(document).ready(function () {
-    $("#sprinklerData").delay(1750).fadeIn(250);
     $("#menuopen").click(function () {
         $("#menuopen").fadeOut(250, function () {
             $('#menunav').fadeIn(250);
@@ -84,16 +83,22 @@ $(document).ready(function () {
 
 function createTable() {
     let tr = "";
-    console.log(system_status.length)
     for (i = 0; i < system_status.length; i++) {
         let sprinklerInfo = system_status[i];
+        console.log(sprinklerInfo)
         let name = sprinklerInfo['zonename'];
         let gpio = sprinklerInfo['gpio'];
         let enabled = sprinklerInfo['enabled'] ? "" : "unscheduled";
-        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name "+enabled+"'>Zone " + (i + 1) + "</p><p> " + name + " </p></div></td>"
-        tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + "); return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>Turn <span id='status-button-" + i + "'>Off</span></button> </div></td></tr>"
+        let on = sprinklerInfo['status'] == "on" ? "Off" : "On";
+        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name " + enabled + "'>Zone " + (i + 1) + "</p>"
+        tr += "<p> " + name + " </p></div></td>"
+        tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + ");";
+        tr += " return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>"
+        tr += "Turn <span id='status-button-" + i + "'>" + on + "</span></button> </div></td></tr>"
     }
     $("#sprinklerData").append(tr);
+    $("#sprinklerData").fadeIn(250);
+
 }
 
 function getData(index) {
