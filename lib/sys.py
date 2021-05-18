@@ -34,7 +34,6 @@ for row in list(cur.fetchall()):
 	    systemEnabled=row[3]
 	    if not systemEnabled:
 	        continue
-
 		GPIO.setmode(GPIO.BCM)
 		print("System %s "% row[2])
 		GPIO.setup(int(row[0]), GPIO.OUT)
