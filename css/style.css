@@ -60,6 +60,7 @@
     border-right-style: hidden;
     border-left-style: hidden;
     max-width: 50%;
+    text-align: right;
 }
 
 .subsetting {
