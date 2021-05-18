@@ -23,6 +23,8 @@ function getData(id, add) {
         $("#zone-name").val('');
         $("#zone-gpio").val('');
         $("#zone-runtime").val('');
+        $("#zone-enabled").attr('checked', true);
+        $("#zone-autooff").attr('checked', true);
     } else {
         setTimeout(function () {
             $("#zone-name").val(zoneStatus[id]["zonename"]);
@@ -32,6 +34,7 @@ function getData(id, add) {
             $("#zone-number").val(id);
             $("#zone-delete").val(id);
             $("#zone-enabled").prop("checked", zoneStatus[id]["enabled"]);
+            $("#zone-autooff").prop("checked", zoneStatus[id]["autooff"]);
             console.log(zoneStatus[id]["id"]);
             window.addMode = false;
         }, 250);
@@ -45,6 +48,7 @@ function submitChanges() {
     let zonename = $("#zone-name").val();
     let gpio = $("#zone-gpio").val();
     let scheduled = $("#zone-enabled").prop('checked');
+    let autooff = $("#zone-autooff").prop('checked');
     if (runtime === "")
         runtime = 10;
     if (zonename === "")
@@ -63,7 +67,8 @@ function submitChanges() {
         name: zonename,
         gpio: gpio,
         runtime: runtime,
-        scheduled: scheduled
+        scheduled: scheduled,
+        autooff: autooff
     };
 
     if (addMode)
@@ -72,7 +77,8 @@ function submitChanges() {
             name: zonename,
             gpio: gpio,
             runtime: runtime,
-            scheduled: scheduled
+            scheduled: scheduled,
+            autooff: autooff
         };
 
     if (deleteMode) {
@@ -98,7 +104,9 @@ function createEditRow(index) {
     let tr = "";
     let id = zoneStatus[index]['id'];
     let enabled = zoneStatus[index]['enabled'] ? "" : "unscheduled";
-    tr += "<tr class='"+enabled+"'>";
+    let autooff = zoneStatus[index]['autooff'] ? "" : "italic"
+
+    tr += "<tr class='"+enabled+" "+autooff+"'>";
     tr += "<td id='zone-" + id + "-index'></td>";
     tr += "<td id='zone-" + id + "-name' class='w3-hide-small'></td>";
     tr += "<td id='zone-" + id + "-time'></td>";

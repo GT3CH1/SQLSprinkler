@@ -12,6 +12,7 @@ if (isset($_GET['systems'])) {
     $names = $sqlquery->names;
     $runtimes = $sqlquery->times;
     $enableds = $sqlquery->enableds;
+    $autooffs = $sqlquery->autooffs;
     $array = array();
     for ($i = 0; $i < sizeof($id); $i++) {
         $value = exec(' which gpio && gpio -g read ' . $gpios[$i] . ' || echo 1');
@@ -21,6 +22,7 @@ if (isset($_GET['systems'])) {
         $array[$i]->zonename = $names[$i];
         $array[$i]->runtime = $runtimes[$i];
         $array[$i]->enabled = $enableds[$i] == "1";
+        $array[$i]->autooff = boolval($autooffs[$i]);
         $array[$i]->id = $id[$i];
     }
     $json = json_encode($array);
@@ -74,7 +76,9 @@ if (isset($_POST['call'])) {
         $name = $_POST['name'];
         $runtime = $_POST['runtime'];
         $enabled = $_POST['scheduled'];
-        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime . ", `Enabled`=" . $enabled . " WHERE id=" . $id;
+        $autooff = $_POST['autooff'];
+        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime .
+            ", `Enabled`=" . $enabled . ", `Autooff`=" . $autooff . " WHERE id=" . $id;
         $sqlquery->querySQL($query);
         echo $query;
     }
@@ -83,7 +87,10 @@ if (isset($_POST['call'])) {
         $name = $_POST['name'];
         $runtime = $_POST['runtime'];
         $enabled = $_POST['scheduled'];
-        $sqlquery->querySQL("INSERT INTO `Systems` (`Name`, `GPIO`, `Time`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "','" . $enabled . "')");
+        $autooff = $_POST['autooff'];
+        $query = "INSERT INTO `Systems` (`Name`, `GPIO`, `Time`, `Enabled`, `Autooff`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "'," . $enabled . "," . $autooff . ")";
+        $sqlquery->querySQL($query);
+        echo $query;
     }
     if ($callType == "delete") {
         $id = $_POST['id'];

@@ -83,9 +83,10 @@ function buildZoneTable() {
         let name = zoneData['zonename'];
         let gpio = zoneData['gpio'];
         let enabled = zoneData['enabled'] ? "" : "unscheduled";
+        let autooff = zoneData['autooff'] ? "" : "italic"
         let on = zoneData['status'] === "on" ? "Off" : "On";
         let zoneCss = zoneData['status'] === "on" ? "systemon" : "systemoff";
-        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name " + enabled + "'>Zone " + (i + 1) + "</p>"
+        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name " + autooff + " " + enabled + "'>Zone " + (i + 1) + "</p>"
         tr += "<p> " + name + " </p></div></td>"
         tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='sendData(" + i + ");";
         tr += " return false' class='w3-button " + zoneCss + " w3-round-xxlarge mybutton w3-center'>"

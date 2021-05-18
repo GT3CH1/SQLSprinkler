@@ -11,7 +11,11 @@
 * Mobile support.
 * Customizable sprinkler name and run time.
 * Automatic running of the schedule (each zone from top to bottom.)
+  * Zones can be customized to be enabled during the schedule run.
+  * Zones that are disabled from this schedule are marked in red.
 * Automatic shut off of sprinklers that are turned on from web page
+  * Zones can be customized to have this feature turned on or off.
+  * Zones that have this feature turned off are marked in *italics*
 
 ### SETUP
 
@@ -50,8 +54,6 @@
 * Add a day schedule (like A and B days) for zones (?)
 * Add a script to allow user to control when the system automatically runs (cron) (?)
 * Better mobile support
-* Per-zone auto off timer (currently zone run time) 
-* Web interface run time configuration(?)
 * Schedule builder (?)
 
 ### DEPENDENCIES
@@ -84,8 +86,7 @@
 * As of now, all zones are configured to automatically shut off if turned on from the web page after their respective run time has elapsed.
 * This system relies on relays to control the sprinkler system (one relay per zone)
     * General knowledge of how to wire an electrical system is required.
-        * Please be careful while handling electricity. I am not responsible for anything. 
-
+        * Please be careful while handling electricity. I am not responsible for anything.
 
 Copyright 2021 Gavin Pease
 
