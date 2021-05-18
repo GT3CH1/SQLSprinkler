@@ -1,8 +1,9 @@
 ## A lightweight web page to control sprinkler systems on a raspberry pi.
-![Main page](img/main.png)  
-
-![System Settings](img/settings.png)  
-  
+#### Main page
+![Main page](img/main.png)
+#### System Settings
+![System Settings](img/settings.png)
+#### Zone Configuration
 ![System Configuration](img/config.png)
 
 ### FEATURES
