@@ -53,13 +53,7 @@ $(document).ready(function () {
         });
     });
     $("#schedule-btn").click(function () {
-        let xhttp = new XMLHttpRequest();
-        let enabled = !systemEnabled;
-        let info = "systemenable=" + enabled;
-        xhttp.open("GET", "lib/api.php?" + info, true);
-        console.log("sending");
-        console.log(info);
-        xhttp.send();
+        $.post('lib/api.php', {systemtoggle: true});
     });
     $("#update").click(function () {
         console.log("Sent update request...");
@@ -105,7 +99,7 @@ function sendData(index) {
         state: toggle
     }
     console.log(data);
-    $.post('lib/api.php',data).done(function(returns){
+    $.post('lib/api.php', data).done(function (returns) {
         console.log(returns);
     });
 

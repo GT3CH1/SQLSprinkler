@@ -28,8 +28,8 @@ class Zone
         $json->name = $name;
         $json->gpio = intval($gpio);
         $json->runtime = intval($runtime);
-        $json->enabled = boolval($enabled);
-        $json->autooff = boolval($autooff);
+        $json->enabled = $enabled;
+        $json->autooff = $autooff;
         $json->id = intval($id);
         $json->status = $status;
         $this->json = $json;
@@ -64,36 +64,44 @@ class Zone
 
     /**
      * Creates an SQL update statement for a zone
-     * @param $name - The new name of the zone.
-     * @param $gpio - The new GPIO pin of the zone.
-     * @param $runtime - The new runtime of the zone.
-     * @param $enabled - The new status of zone enabled
-     * @param $autooff - The new status of autoff
-     * @param $id - The id of the zone.
+     * @param Zone $zone - The zone we are updating.
      * @return string
      */
-    static function getUpdateQuery($name, $gpio, $runtime, $enabled, $autooff, $id)
+    static function getUpdateQuery(Zone $zone)
     {
+        $data = json_decode($zone->toJson(),true);
+        $name = $data['name'];
+        $gpio = $data['gpio'];
+        $runtime = $data['runtime'];
+        $enabled = $data['enabled'];
+        $autooff = $data['autooff'];
+        $id = $data['id'];
         $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime .
             ", `Enabled`=" . $enabled . ", `Autooff`=" . $autooff . " WHERE id=" . $id;
         return $query;
     }
 
     /**
-     * @param $name - The name of the new zone.
-     * @param $gpio - The gpio of the new zone.
-     * @param $runtime - The run time of the new zone.
-     * @param $enabled - Whether or not this current zone is enabled.
-     * @param $autooff - Whether or not this current zone is automaticcaly shut off.
+     * @param Zone $zone - The zone we are creating.
      * @return string
      */
-    static function getInsertQuery($name,$gpio,$runtime,$enabled,$autooff){
+    static function getInsertQuery(Zone $zone)
+    {
+        $data = json_decode($zone->toJson(),true);
+        $name = $data['name'];
+        $gpio = $data['gpio'];
+        $runtime = $data['runtime'];
+        $enabled = $data['enabled'];
+        $autooff = $data['autooff'];
         $query = "INSERT INTO `Systems` (`Name`, `GPIO`, `Time`, `Enabled`, `Autooff`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "'," . $enabled . "," . $autooff . ")";
         return $query;
     }
 
-    static function getDeleteQuery($id){
-        $query = "DELETE FROM `Systems` WHERE `id` =" .$id;
+    static function getDeleteQuery(Zone $zone)
+    {
+        $data = $zone->toJson();
+        $id = json_decode($data,true)["id"];
+        $query = "DELETE FROM `Systems` WHERE `id` =" . $id;
         return $query;
     }
 }

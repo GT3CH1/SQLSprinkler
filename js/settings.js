@@ -62,6 +62,8 @@ function submitChanges() {
         return;
     }
     data = {
+        contentType: 'application/json',
+        dataType: 'json',
         call: "update",
         id: id,
         name: zonename,
@@ -73,6 +75,8 @@ function submitChanges() {
 
     if (addMode)
         data = {
+            contentType: 'application/json',
+            dataType: 'json',
             call: "add",
             name: zonename,
             gpio: gpio,
