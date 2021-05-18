@@ -68,6 +68,9 @@
     padding-bottom: 30px;
     padding-top: 30px;
 }
+.unscheduled{
+    color: #ff414f;
+}
 
 .setting-label {
     margin-top: 10px !important;

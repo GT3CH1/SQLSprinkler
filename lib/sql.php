@@ -8,6 +8,7 @@ class doSQL
     var $times = array();
     var $days = array();
     var $ids = array();
+    var $enableds = array();
 
     private $servername;
     private $username;
@@ -41,6 +42,7 @@ class doSQL
         $newnames = array();
         $newgpios = array();
         $newtimes = array();
+        $newenabled = array();
         $id = array();
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
@@ -48,11 +50,13 @@ class doSQL
                 array_push($newgpios, $row['GPIO']);
                 array_push($newtimes, $row['Time']);
                 array_push($id, $row['id']);
+                array_push($newenabled,$row['Enabled']);
             }
             $this->names = $newnames;
             $this->gpios = $newgpios;
             $this->times = $newtimes;
             $this->ids = $id;
+            $this->enableds = $newenabled;
         }
     }
 }

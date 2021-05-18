@@ -83,13 +83,14 @@ $(document).ready(function () {
 });
 
 function createTable() {
-    let tr ="";
+    let tr = "";
     console.log(system_status.length)
     for (i = 0; i < system_status.length; i++) {
         let sprinklerInfo = system_status[i];
         let name = sprinklerInfo['zonename'];
         let gpio = sprinklerInfo['gpio'];
-        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name'>Zone " + (i + 1) + "</p><p> " + name + " </p> </div></td>"
+        let enabled = sprinklerInfo['enabled'] ? "" : "unscheduled";
+        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name "+enabled+"'>Zone " + (i + 1) + "</p><p> " + name + " </p></div></td>"
         tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + "); return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>Turn <span id='status-button-" + i + "'>Off</span></button> </div></td></tr>"
     }
     $("#sprinklerData").append(tr);

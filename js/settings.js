@@ -17,13 +17,6 @@ function getSystemStatus() {
 $(document).ready(function () {
     window.deleteMode = false;
     getSystemStatus();
-    $("#add").click(function () {
-        getData(-1, true);
-    });
-    $("#back").click(function () {
-        fadeEditOut();
-    })
-
 });
 
 function getData(id, add) {
@@ -41,6 +34,7 @@ function getData(id, add) {
             $("#system-id").val(system_status[id]["id"]);
             $("#system-number").val(id);
             $("#zone-delete").val(id);
+            $("#zone-enabled").prop("checked", system_status[id]["enabled"]);
             console.log(system_status[id]["id"]);
             window.addMode = false;
         }, 250);
@@ -48,32 +42,49 @@ function getData(id, add) {
     $("#edit").fadeIn(500);
 }
 
-function submitChanges(id, zonename, gpio, runtime) {
-    var addMode = window.addMode;
-    var deleteMode = window.deleteMode;
-    var data;
-    if (addMode) {
+function submitChanges() {
+    let id = $("#system-id").val();
+    let runtime = $("#zone-runtime").val();
+    let zonename = $("#zone-name").val();
+    let gpio = $("#zone-gpio").val();
+    let scheduled = $("#zone-enabled").prop('checked');
+    if (runtime == "")
+        runtime = 10;
+    if (zonename == "")
+        zonename = "Change me";
+
+    let addMode = window.addMode;
+    let deleteMode = window.deleteMode;
+    let data;
+    if(gpio == "" || gpio > 40) {
+        alert("You must set a proper GPIO pin!");
+        return;
+    }
+    data = {
+        call: "update",
+        id: id,
+        name: zonename,
+        gpio: gpio,
+        runtime: runtime,
+        scheduled: scheduled
+    };
+
+    if (addMode)
         data = {
             call: "add",
-            gpio: gpio,
-            name: zonename,
-            runtime: runtime
-        };
-    } else {
-        data = {
-            call: "update",
-            id: id,
             name: zonename,
             gpio: gpio,
-            runtime: runtime
+            runtime: runtime,
+            scheduled: scheduled
         };
-    }
+
     if (deleteMode) {
         data = {
             call: "delete",
             id: id
         }
     }
+    console.log(data);
     $.post("../lib/api.php", data).done(function (data) {
         console.log("Received data: " + data);
         setTimeout(getSystemStatus, 10);
@@ -89,7 +100,8 @@ function fadeEditOut() {
 function createEditRow(index) {
     let tr = "";
     let id = system_status[index]['id'];
-    tr += "<tr>";
+    let enabled = system_status[index]['enabled'] ? "" : "unscheduled";
+    tr += "<tr class='"+enabled+"'>";
     tr += "<td id='zone-" + id + "-index'></td>";
     tr += "<td id='zone-" + id + "-name' class='w3-hide-small'></td>";
     tr += "<td id='zone-" + id + "-time'></td>";
@@ -113,26 +125,18 @@ function setButtonListener() {
             if (!wantsToDelete)
                 return;
             window.deleteMode = true;
-            submitChanges(system_status[val]['id'], "", "", "", "");
+            submitChanges();
         }
     });
     $("#settings-submit").click(function () {
-        runtime = $("#zone-runtime").val();
-        name = $("#zone-name").val();
-        gpio = $("#zone-gpio").val();
-        if (runtime == "")
-            runtime = 10;
-        if (name == "")
-            name = "Change me";
-        var addMode = window.addMode;
-        if (addMode) {
-            submitChanges("", name, gpio, runtime);
-        } else {
-            var id = $("#system-id").val();
-            console.log(id);
-            submitChanges(id, name, gpio, runtime);
-        }
+        submitChanges();
     });
+    $("#add").click(function () {
+        getData(-1, true);
+    });
+    $("#back").click(function () {
+        fadeEditOut();
+    })
 }
 
 function buildSystemTable() {
