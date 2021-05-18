@@ -108,9 +108,9 @@ function createEditRow(index) {
     tr += "<td id='zone-" + id + "-name' class='w3-hide-small'></td>";
     tr += "<td id='zone-" + id + "-time'></td>";
     tr += "<td>";
-    tr += "<button id ='zone-" + id + "-edit' class='w3-button w3-gray w3-round-xlarge' value='" + index + "'>Edit</button>";
+    tr += "<button id ='zone-" + id + "-edit' class='w3-button w3-flat-silver w3-round-xlarge' value='" + index + "'>Edit</button>";
     tr += "&nbsp;&nbsp;"
-    tr += "<button id ='zone-" + id + "-delete' class='w3-button w3-red w3-round-xlarge' value='" + index + "'>Delete</button>";
+    tr += "<button id ='zone-" + id + "-delete' class='w3-button w3-flat-alizarin w3-round-xlarge' value='" + index + "'>Delete</button>";
     tr += "</td>";
     tr += "</tr>";
     return tr;

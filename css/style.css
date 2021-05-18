@@ -7,25 +7,18 @@
 }
 
 /*System/program on is for when the text displays "on"*/
-.programon {
-    background-color: #A5D2FF;
-}
-
-.programoff {
+.systemoff {
     background-color: #FF8B8B;
 }
 
-.systemoff {
+.systemon {
     background-color: #8BffA1;
 }
 
-.systemon {
-    background-color: #FCFF90;
-}
 
-.programon, .programoff, .systemon, .systemoff {
+.systemon, .systemoff {
     outline: none;
-    color: #707070;
+    color: #505050;
 }
 
 .fix-bars {
@@ -83,5 +76,4 @@
 .edit-page {
     font-size: 1.25em;
     display: block !important;
-    margin-top: 32px;
 }
