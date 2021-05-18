@@ -1,11 +1,11 @@
 // Copyright 2021 Gavin Pease
-var system_status = "";
+let system_status = "";
 let system_enable;
 let loadTable = true;
 
 function getSprinklerData() {
-    $.get('lib/api.php?systemstatus', function (data, textStatus, jqXHR) {
-        system_enable = JSON.parse(data)["systemstatus"] == "1";
+    $.get('lib/api.php?systemstatus', function (data) {
+        system_enable = JSON.parse(data)["systemstatus"] === "1";
         if (system_enable) {
             $("#schedule").html("On");
             $("#schedule-btn-txt").html("Enabled");
@@ -16,9 +16,7 @@ function getSprinklerData() {
             $("#schedule-btn-txt").html("Disabled");
         }
     });
-    $.get('lib/api.php?systems', function () {
-
-    }).done(function (data, textStatus, jqXHR) {
+    $.get('lib/api.php?systems').done(function (data) {
         system_status = JSON.parse(data);
         if (loadTable)
             createTable();
@@ -30,18 +28,15 @@ function getSprinklers() {
     setInterval(function () {
         getSprinklerData();
         let button_id;
-        let name_id;
+        let name_id, i;
         for (i = 0; i < system_status.length; i++) {
             button_id = system_status[i]["gpio"];
-            name_id = system_status[i]["status"] == "off" ? "On" : "Off";
+            name_id = system_status[i]["status"] === "off" ? "On" : "Off";
             document.getElementById("status-button-" + i).innerHTML = name_id;
-            if (name_id == "Off") {
-                $("#" + button_id).removeClass("systemoff").fadeIn(150);
-                $("#" + button_id).addClass("systemon").fadeIn(150);
-            } else {
-                $("#" + button_id).removeClass("systemon").fadeIn(150);
-                $("#" + button_id).addClass("systemoff").fadeIn(150);
-            }
+            if (name_id === "Off")
+                $("#" + button_id).removeClass("systemoff").addClass("systemon");
+            else
+                $("#" + button_id).removeClass("systemon").addClass("systemoff");
         }
     }, 1000);
 }
@@ -60,7 +55,7 @@ $(document).ready(function () {
     $("#schedule-btn").click(function () {
         let xhttp = new XMLHttpRequest();
         let enabled = !system_enable;
-        var info = "systemenable=" + enabled;
+        let info = "systemenable=" + enabled;
         xhttp.open("GET", "lib/api.php?" + info, true);
         console.log("sending");
         console.log(info);
@@ -69,7 +64,7 @@ $(document).ready(function () {
     $("#update").click(function () {
         console.log("Sent update request...");
         $("button").attr("disabled", "disabled");
-        $.get('lib/api.php?update', function (data, textStatus, jqXHR) {
+        $.get('lib/api.php?update', function (data) {
             console.log("Response -> " + data);
             $("#notification-text").html("Done checking for updates. Check log for more information.");
             $("#notification").fadeIn("slow");
@@ -83,7 +78,7 @@ $(document).ready(function () {
 
 function createTable() {
     let tr = "";
-    for (i = 0; i < system_status.length; i++) {
+    for (let i = 0; i < system_status.length; i++) {
         let sprinklerInfo = system_status[i];
         console.log(sprinklerInfo)
         let name = sprinklerInfo['zonename'];
@@ -97,15 +92,14 @@ function createTable() {
         tr += " return false' class='w3-button " + zoneCss + " w3-round-xxlarge mybutton w3-center'>"
         tr += "Turn <span id='status-button-" + i + "'>" + on + "</span></button> </div></td></tr>"
     }
-    $("#sprinklerData").append(tr);
-    $("#sprinklerData").fadeIn(250);
+    $("#sprinklerData").append(tr).fadeIn(250);
 
 }
 
 function getData(index) {
-    var xhttp = new XMLHttpRequest();
-    var toggle = ((system_status[index]["status"] == "on") ? "off" : "on");
-    var info = toggle + "=" + system_status[index]["gpio"];
+    let xhttp = new XMLHttpRequest();
+    const toggle = ((system_status[index]["status"] === "on") ? "off" : "on");
+    const info = toggle + "=" + system_status[index]["gpio"];
     xhttp.open("GET", "lib/api.php?" + info, true);
     console.log("sending");
     console.log(info);
