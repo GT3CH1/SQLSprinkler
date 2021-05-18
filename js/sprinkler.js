@@ -89,11 +89,12 @@ function createTable() {
         let name = sprinklerInfo['zonename'];
         let gpio = sprinklerInfo['gpio'];
         let enabled = sprinklerInfo['enabled'] ? "" : "unscheduled";
-        let on = sprinklerInfo['status'] == "on" ? "Off" : "On";
+        let on = sprinklerInfo['status'] === "on" ? "Off" : "On";
+        let zoneCss = sprinklerInfo['status'] === "on" ? "systemon" : "systemoff";
         tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name " + enabled + "'>Zone " + (i + 1) + "</p>"
         tr += "<p> " + name + " </p></div></td>"
         tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + ");";
-        tr += " return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>"
+        tr += " return false' class='w3-button " + zoneCss + " w3-round-xxlarge mybutton w3-center'>"
         tr += "Turn <span id='status-button-" + i + "'>" + on + "</span></button> </div></td></tr>"
     }
     $("#sprinklerData").append(tr);
