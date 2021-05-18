@@ -19,20 +19,14 @@ class System
     public function getZones()
     {
         $this->sqlquery->doSQLStuff("SELECT * FROM `Systems`");
-        $gpios = $this->sqlquery->gpios;
-        $id = $this->sqlquery->ids;
-        $names = $this->sqlquery->names;
-        $runtimes = $this->sqlquery->times;
-        $enableds = $this->sqlquery->enableds;
-        $autooffs = $this->sqlquery->autooffs;
         $array = array();
-        for ($i = 0; $i < sizeof($id); $i++) {
-            $gpio = $gpios[$i];
-            $zonename = $names[$i];
-            $runtime = $runtimes[$i];
-            $enabled = $enableds[$i] == "1";
-            $autooff = boolval($autooffs[$i]);
-            $currId = $id[$i];
+        for ($i = 0; $i < sizeof($this->sqlquery->ids); $i++) {
+            $gpio = $this->sqlquery->gpios[$i];
+            $zonename = $this->sqlquery->names[$i];
+            $runtime = $this->sqlquery->times[$i];
+            $enabled = $this->sqlquery->enableds[$i] == "1";
+            $autooff = boolval($this->sqlquery->autooffs[$i]);
+            $currId = $this->sqlquery->ids[$i];
             $zone = new Zone($zonename, $gpio, $runtime, $enabled, $autooff, $currId);
             $array[$i] = $zone->getData();
         }
