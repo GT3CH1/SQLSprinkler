@@ -47,11 +47,10 @@
 #### TODO
 * Write a script to run setup automatically.
 * Add a user to run python commands.
-* Convert the settings table to pure html and javascript.
-* Add a day schedule (like A and B days) (?)
+* Add a day schedule (like A and B days) for zones (?)
 * Add a script to allow user to control when the system automatically runs (cron) (?)
 * Better mobile support
-* Per-system auto off 
+* Per-zone auto off timer (currently zone run time) 
 * Web interface run time configuration(?)
 * Schedule builder (?)
 
@@ -81,9 +80,9 @@
 -   A stable internet connection
 
 ### ADDITIONAL INFORMATION
-* There can only be one system running at a time.
-* As of now, all systems configured to automatically shut off if turned on from the web page after their respective run time has elapsed
-* This system relies on relays to control the sprinkler system (one relay per system)
+* There can only be one zone running at a time.
+* As of now, all zones are configured to automatically shut off if turned on from the web page after their respective run time has elapsed.
+* This system relies on relays to control the sprinkler system (one relay per zone)
     * General knowledge of how to wire an electrical system is required.
         * Please be careful while handling electricity. I am not responsible for anything. 
 

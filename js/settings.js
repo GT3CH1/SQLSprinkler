@@ -1,22 +1,19 @@
 // Copyright 2021 Gavin Pease
-system_status = "";
-loadTable = true;
-
-function getSystemStatus() {
-    system_status = "";
-    $.get('../lib/api.php?systems', function (data, textStatus, jqXHR) {
-    }).done(function (data) {
-        system_status = JSON.parse(data);
-        buildSystemTable();
-        updateSystemTable();
+function getZoneData() {
+    zoneStatus = "";
+    $.get('../lib/api.php?systems').done(function (data) {
+        zoneStatus = JSON.parse(data);
+        buildZoneTable();
+        updateZoneTable();
         console.log("Done receiving sprinkler data.");
         $("#settings-table").delay(100).fadeIn(250);
     });
 }
 
 $(document).ready(function () {
+    loadTable = true;
     window.deleteMode = false;
-    getSystemStatus();
+    getZoneData();
 });
 
 function getData(id, add) {
@@ -28,14 +25,14 @@ function getData(id, add) {
         $("#zone-runtime").val('');
     } else {
         setTimeout(function () {
-            $("#zone-name").val(system_status[id]["zonename"]);
-            $("#zone-gpio").val(system_status[id]["gpio"]);
-            $("#zone-runtime").val(system_status[id]["runtime"]);
-            $("#system-id").val(system_status[id]["id"]);
-            $("#system-number").val(id);
+            $("#zone-name").val(zoneStatus[id]["zonename"]);
+            $("#zone-gpio").val(zoneStatus[id]["gpio"]);
+            $("#zone-runtime").val(zoneStatus[id]["runtime"]);
+            $("#zone-id").val(zoneStatus[id]["id"]);
+            $("#zone-number").val(id);
             $("#zone-delete").val(id);
-            $("#zone-enabled").prop("checked", system_status[id]["enabled"]);
-            console.log(system_status[id]["id"]);
+            $("#zone-enabled").prop("checked", zoneStatus[id]["enabled"]);
+            console.log(zoneStatus[id]["id"]);
             window.addMode = false;
         }, 250);
     }
@@ -43,7 +40,7 @@ function getData(id, add) {
 }
 
 function submitChanges() {
-    let id = $("#system-id").val();
+    let id = $("#zone-id").val();
     let runtime = $("#zone-runtime").val();
     let zonename = $("#zone-name").val();
     let gpio = $("#zone-gpio").val();
@@ -87,7 +84,7 @@ function submitChanges() {
     console.log(data);
     $.post("../lib/api.php", data).done(function (data) {
         console.log("Received data: " + data);
-        setTimeout(getSystemStatus, 10);
+        setTimeout(getZoneData, 10);
         fadeEditOut();
     });
 }
@@ -99,8 +96,8 @@ function fadeEditOut() {
 
 function createEditRow(index) {
     let tr = "";
-    let id = system_status[index]['id'];
-    let enabled = system_status[index]['enabled'] ? "" : "unscheduled";
+    let id = zoneStatus[index]['id'];
+    let enabled = zoneStatus[index]['enabled'] ? "" : "unscheduled";
     tr += "<tr class='"+enabled+"'>";
     tr += "<td id='zone-" + id + "-index'></td>";
     tr += "<td id='zone-" + id + "-name' class='w3-hide-small'></td>";
@@ -138,15 +135,15 @@ function setButtonListener() {
     })
 }
 
-function buildSystemTable() {
+function buildZoneTable() {
     $("#settings-table").html('<tr><th>Zone</th><th class="w3-hide-small">Name</th><th>Run Time</th><th>Actions</th></tr>');
-    updateSystemTable();
+    updateZoneTable();
     setButtonListener();
 }
 
-function updateSystemTable() {
-    for (let i = 0; i < system_status.length; i++) {
-        let currSprinkler = system_status[i];
+function updateZoneTable() {
+    for (let i = 0; i < zoneStatus.length; i++) {
+        let currSprinkler = zoneStatus[i];
         let currName = currSprinkler['zonename'];
         let currTime = currSprinkler['runtime'];
         let currZone = i + 1;

@@ -1,12 +1,12 @@
 // Copyright 2021 Gavin Pease
-let system_status = "";
-let system_enable;
+let zoneStatus = "";
+let systemEnabled;
 let loadTable = true;
 
-function getSprinklerData() {
+function getZoneData() {
     $.get('lib/api.php?systemstatus', function (data) {
-        system_enable = JSON.parse(data)["systemstatus"] === "1";
-        if (system_enable) {
+        systemEnabled = JSON.parse(data)["systemstatus"] === "1";
+        if (systemEnabled) {
             $("#schedule").html("On");
             $("#schedule-btn-txt").html("Enabled");
             $("#schedule-btn").removeClass("systemoff").addClass("systemon");
@@ -17,21 +17,21 @@ function getSprinklerData() {
         }
     });
     $.get('lib/api.php?systems').done(function (data) {
-        system_status = JSON.parse(data);
+        zoneStatus = JSON.parse(data);
         if (loadTable)
-            createTable();
+            buildZoneTable();
         loadTable = false;
     });
 }
 
-function getSprinklers() {
+function updateZoneTable() {
     setInterval(function () {
-        getSprinklerData();
+        getZoneData();
         let button_id;
         let name_id, i;
-        for (i = 0; i < system_status.length; i++) {
-            button_id = system_status[i]["gpio"];
-            name_id = system_status[i]["status"] === "off" ? "On" : "Off";
+        for (i = 0; i < zoneStatus.length; i++) {
+            button_id = zoneStatus[i]["gpio"];
+            name_id = zoneStatus[i]["status"] === "off" ? "On" : "Off";
             document.getElementById("status-button-" + i).innerHTML = name_id;
             if (name_id === "Off")
                 $("#" + button_id).removeClass("systemoff").addClass("systemon");
@@ -54,7 +54,7 @@ $(document).ready(function () {
     });
     $("#schedule-btn").click(function () {
         let xhttp = new XMLHttpRequest();
-        let enabled = !system_enable;
+        let enabled = !systemEnabled;
         let info = "systemenable=" + enabled;
         xhttp.open("GET", "lib/api.php?" + info, true);
         console.log("sending");
@@ -76,19 +76,18 @@ $(document).ready(function () {
     });
 });
 
-function createTable() {
+function buildZoneTable() {
     let tr = "";
-    for (let i = 0; i < system_status.length; i++) {
-        let sprinklerInfo = system_status[i];
-        console.log(sprinklerInfo)
-        let name = sprinklerInfo['zonename'];
-        let gpio = sprinklerInfo['gpio'];
-        let enabled = sprinklerInfo['enabled'] ? "" : "unscheduled";
-        let on = sprinklerInfo['status'] === "on" ? "Off" : "On";
-        let zoneCss = sprinklerInfo['status'] === "on" ? "systemon" : "systemoff";
+    for (let i = 0; i < zoneStatus.length; i++) {
+        let zoneData = zoneStatus[i];
+        let name = zoneData['zonename'];
+        let gpio = zoneData['gpio'];
+        let enabled = zoneData['enabled'] ? "" : "unscheduled";
+        let on = zoneData['status'] === "on" ? "Off" : "On";
+        let zoneCss = zoneData['status'] === "on" ? "systemon" : "systemoff";
         tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name " + enabled + "'>Zone " + (i + 1) + "</p>"
         tr += "<p> " + name + " </p></div></td>"
-        tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + ");";
+        tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='sendData(" + i + ");";
         tr += " return false' class='w3-button " + zoneCss + " w3-round-xxlarge mybutton w3-center'>"
         tr += "Turn <span id='status-button-" + i + "'>" + on + "</span></button> </div></td></tr>"
     }
@@ -96,10 +95,10 @@ function createTable() {
 
 }
 
-function getData(index) {
+function sendData(index) {
     let xhttp = new XMLHttpRequest();
-    const toggle = ((system_status[index]["status"] === "on") ? "off" : "on");
-    const info = toggle + "=" + system_status[index]["gpio"];
+    const toggle = ((zoneStatus[index]["status"] === "on") ? "off" : "on");
+    const info = toggle + "=" + zoneStatus[index]["gpio"];
     xhttp.open("GET", "lib/api.php?" + info, true);
     console.log("sending");
     console.log(info);
