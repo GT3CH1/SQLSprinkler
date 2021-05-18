@@ -34,14 +34,9 @@ if (isset($_POST['state'])) {
 if (isset ($_POST['systemtoggle']))
     return $system->toggleSystemSchedule();
 
-if (isset ($_GET['update'])) {
-    $test = shell_exec('/usr/bin/git fetch');
-    echo $test;
-    $test = shell_exec('/usr/bin/git reset');
-    echo $test;
-    $test = shell_exec('/usr/bin/git pull');
-    echo $test;
-}
+if (isset ($_GET['update']))
+    echo shell_exec('/usr/bin/git fetch ; /usr/bin/git reset ; /usr/bin/git pull');
+
 
 if (isset($_POST['call'])) {
     $query = "";
