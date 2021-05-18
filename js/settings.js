@@ -105,7 +105,7 @@ function createEditRow(index) {
     let id = system_status[index]['id'];
     tr += "<tr>";
     tr += "<td id='zone-" + id + "-index'></td>";
-    tr += "<td id='zone-" + id + "-name'></td>";
+    tr += "<td id='zone-" + id + "-name' class='w3-hide-small'></td>";
     tr += "<td id='zone-" + id + "-time'></td>";
     tr += "<td>";
     tr += "<button id ='zone-" + id + "-edit' class='w3-button w3-gray w3-round-xlarge' value='" + index + "'>Edit</button>";
@@ -135,7 +135,7 @@ function setButtonListener() {
 }
 
 function buildSystemTable() {
-    $("#settings-table").html('<tr><th>Zone</th><th>Name</th><th>Run Time</th><th>Actions</th></tr>');
+    $("#settings-table").html('<tr><th>Zone</th><th class="w3-hide-small">Name</th><th>Run Time</th><th>Actions</th></tr>');
     updateSystemTable();
     setButtonListener();
 }
