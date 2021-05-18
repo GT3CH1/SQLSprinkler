@@ -42,10 +42,10 @@
   9) Run `sudo -s`
   10) Run `su www-data -s /bin/bash`
   11) Run `crontab -e`
-    * Add your schedule for when you want the system to run automatically.
-    * If you need help, see [this link](!http://crontab.guru)
-    * Please use the following command: `sudo /var/www/html/modules/SQLSprinkler/lib/sys.py`
-    * After the configuration of the cron tab, save and exit.
+      * Add your schedule for when you want the system to run automatically.
+      * If you need help, see [https://crontab.guru](!https://crontab.guru)
+      * Please use the following command: `sudo /var/www/html/modules/SQLSprinkler/lib/sys.py`
+      * After the configuration of the cron tab, save and exit.
   12) Done!
 
 #### TODO
