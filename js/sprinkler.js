@@ -5,7 +5,7 @@ let loadTable = true;
 
 function getZoneData() {
     $.get('lib/api.php?systemstatus', function (data) {
-        systemEnabled = JSON.parse(data)["systemstatus"] === "1";
+        systemEnabled = JSON.parse(data)["systemenabled"];
         if (systemEnabled) {
             $("#schedule").html("On");
             $("#schedule-btn-txt").html("Enabled");
