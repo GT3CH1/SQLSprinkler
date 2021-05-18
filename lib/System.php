@@ -1,4 +1,5 @@
 <?php
+/* Copyright 2021 Gavin Pease */
 include('sql.php');
 include('Zone.php');
 
