@@ -80,7 +80,7 @@ function buildZoneTable() {
     let tr = "";
     for (let i = 0; i < zoneStatus.length; i++) {
         let zoneData = zoneStatus[i];
-        let name = zoneData['zonename'];
+        let name = zoneData['name'];
         let gpio = zoneData['gpio'];
         let enabled = zoneData['enabled'] ? "" : "unscheduled";
         let autooff = zoneData['autooff'] ? "" : "italic"

@@ -27,7 +27,7 @@ function getData(id, add) {
         $("#zone-autooff").attr('checked', true);
     } else {
         setTimeout(function () {
-            $("#zone-name").val(zoneStatus[id]["zonename"]);
+            $("#zone-name").val(zoneStatus[id]["name"]);
             $("#zone-gpio").val(zoneStatus[id]["gpio"]);
             $("#zone-runtime").val(zoneStatus[id]["runtime"]);
             $("#zone-id").val(zoneStatus[id]["id"]);
@@ -152,7 +152,7 @@ function buildZoneTable() {
 function updateZoneTable() {
     for (let i = 0; i < zoneStatus.length; i++) {
         let currSprinkler = zoneStatus[i];
-        let currName = currSprinkler['zonename'];
+        let currName = currSprinkler['name'];
         let currTime = currSprinkler['runtime'];
         let currZone = i + 1;
         let id = currSprinkler['id'];
