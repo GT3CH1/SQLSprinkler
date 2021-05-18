@@ -4,6 +4,7 @@
 /* Begin block for API calls */
 include('sql.php');
 include('Zone.php');
+
 $sqlquery = new doSQL();
 
 if (isset($_GET['systems'])) {
@@ -22,8 +23,8 @@ if (isset($_GET['systems'])) {
         $enabled = $enableds[$i] == "1";
         $autooff = boolval($autooffs[$i]);
         $currId = $id[$i];
-        $zone = new Zone($zonename,$gpio,$runtime,$enabled,$autooff,$currId);
-        array_push($array, $zone->getData());
+        $zone = new Zone($zonename, $gpio, $runtime, $enabled, $autooff, $currId);
+        $array[$i] = $zone->getData();
     }
     echo json_encode($array);
 }
@@ -69,31 +70,29 @@ if (isset ($_GET['update'])) {
 }
 if (isset($_POST['call'])) {
     $callType = $_POST['call'];
-    if ($callType == "update") {
-        $gpio = $_POST['gpio'];
-        $id = $_POST['id'];
-        $name = $_POST['name'];
-        $runtime = $_POST['runtime'];
-        $enabled = $_POST['scheduled'];
-        $autooff = $_POST['autooff'];
-        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime .
-            ", `Enabled`=" . $enabled . ", `Autooff`=" . $autooff . " WHERE id=" . $id;
-        $sqlquery->querySQL($query);
-        echo $query;
+    $query = "";
+    $gpio = $_POST['gpio'];
+    $id = (isset($_POST['id']) ? $_POST['id'] : -1);
+    $name = $_POST['name'];
+    $runtime = $_POST['runtime'];
+    $enabled = $_POST['scheduled'];
+    $autooff = $_POST['autooff'];
+    switch ($callType) {
+        case "update":
+            $query = Zone::getUpdateQuery($name, $gpio, $runtime, $enabled, $autooff, $id);
+            $sqlquery->querySQL($query);
+            break;
+        case "add":
+            $query = Zone::getInsertQuery($name, $gpio, $runtime, $enabled, $autooff);
+            $sqlquery->querySQL($query);
+            break;
+        case "delete":
+            $query = Zone::getDeleteQuery($id);
+            $sqlquery->querySQL($query);
+            break;
+        default:
+            break;
     }
-    if ($callType == "add") {
-        $gpio = $_POST['gpio'];
-        $name = $_POST['name'];
-        $runtime = $_POST['runtime'];
-        $enabled = $_POST['scheduled'];
-        $autooff = $_POST['autooff'];
-        $query = "INSERT INTO `Systems` (`Name`, `GPIO`, `Time`, `Enabled`, `Autooff`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "'," . $enabled . "," . $autooff . ")";
-        $sqlquery->querySQL($query);
-        echo $query;
-    }
-    if ($callType == "delete") {
-        $id = $_POST['id'];
-        $sqlquery->querySQL("DELETE FROM `Systems` WHERE `id` = " . $id);
-    }
+    echo $query;
 }
 ?>
