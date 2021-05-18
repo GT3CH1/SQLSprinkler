@@ -24,23 +24,23 @@ isEnabled = 0
 # Use all the SQL you like
 cur.execute("SELECT enabled from Enabled");
 for row in list(cur.fetchall()):
-	isEnabled = row[0]
+    isEnabled = row[0]
 print("Is enabled -> " + str(isEnabled))
 cur.execute("SELECT gpio, Time, id, Enabled FROM Systems ")
 # print all the first cell of all the rows
 for row in list(cur.fetchall()):
-	if (isEnabled==1):
-	    # Whether or not this current system is enabled.
-	    systemEnabled=row[3]
-	    if not systemEnabled:
-	        continue
-		GPIO.setmode(GPIO.BCM)
-		print("System %s "% row[2])
-		GPIO.setup(int(row[0]), GPIO.OUT)
-		GPIO.output(int(row[0]), False)
-		time.sleep(int(row[1])*60)
-		GPIO.output(int(row[0]), True)
-	else:
-		db.close()
-		exit(0)
+    if (isEnabled==1):
+        # Whether or not this current system is enabled.
+        systemEnabled=row[3]
+        if not systemEnabled:
+            continue
+        GPIO.setmode(GPIO.BCM)
+        print("System %s "% row[2])
+        GPIO.setup(int(row[0]), GPIO.OUT)
+        GPIO.output(int(row[0]), False)
+        time.sleep(int(row[1])*60)
+        GPIO.output(int(row[0]), True)
+    else:
+        db.close()
+        exit(0)
 db.close()
