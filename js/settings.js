@@ -23,23 +23,7 @@ $(document).ready(function () {
     $("#back").click(function () {
         fadeEditOut();
     })
-    $("#settings-submit").click(function () {
-        runtime = $("#zone-runtime").val();
-        name = $("#zone-name").val();
-        gpio = $("#zone-gpio").val();
-        if (runtime == "")
-            runtime = 10;
-        if (name == "")
-            name = "Change me";
-        var addMode = window.addMode;
-        if (addMode) {
-            submitChanges("", name, gpio, runtime);
-        } else {
-            var id = $("#system").val();
-            console.log(id);
-            submitChanges(id, name, gpio, runtime);
-        }
-    });
+
 });
 
 function getData(id, add) {
@@ -54,7 +38,9 @@ function getData(id, add) {
             $("#zone-name").val(system_status[id]["zonename"]);
             $("#zone-gpio").val(system_status[id]["gpio"]);
             $("#zone-runtime").val(system_status[id]["runtime"]);
-            $("#system").val(system_status[id]["id"]);
+            $("#system-id").val(system_status[id]["id"]);
+            $("#system-number").val(id);
+            $("#zone-delete").val(id);
             console.log(system_status[id]["id"]);
             window.addMode = false;
         }, 250);
@@ -109,14 +95,13 @@ function createEditRow(index) {
     tr += "<td id='zone-" + id + "-time'></td>";
     tr += "<td>";
     tr += "<button id ='zone-" + id + "-edit' class='w3-button w3-flat-silver w3-round-xlarge' value='" + index + "'>Edit</button>";
-    tr += "&nbsp;&nbsp;"
-    tr += "<button id ='zone-" + id + "-delete' class='w3-button w3-flat-alizarin w3-round-xlarge' value='" + index + "'>Delete</button>";
     tr += "</td>";
     tr += "</tr>";
     return tr;
 }
 
 function setButtonListener() {
+    $("button").unbind();
     $("button").click(function () {
         let editMode = $(this).attr("id").indexOf('edit') > -1;
         let deleteMode = $(this).attr("id").indexOf('delete') > -1;
@@ -124,12 +109,28 @@ function setButtonListener() {
         if (editMode)
             getData(val, false);
         else if (deleteMode) {
-            idToDel = system_status[val]['id'];
             var wantsToDelete = confirm("Are you sure you want to delete zone " + (parseInt(val) + 1) + "?");
             if (!wantsToDelete)
                 return;
             window.deleteMode = true;
-            submitChanges(idToDel, "", "", "", "");
+            submitChanges(system_status[val]['id'], "", "", "", "");
+        }
+    });
+    $("#settings-submit").click(function () {
+        runtime = $("#zone-runtime").val();
+        name = $("#zone-name").val();
+        gpio = $("#zone-gpio").val();
+        if (runtime == "")
+            runtime = 10;
+        if (name == "")
+            name = "Change me";
+        var addMode = window.addMode;
+        if (addMode) {
+            submitChanges("", name, gpio, runtime);
+        } else {
+            var id = $("#system-id").val();
+            console.log(id);
+            submitChanges(id, name, gpio, runtime);
         }
     });
 }

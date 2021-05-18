@@ -12,7 +12,8 @@
     <script src="../js/settings.js"></script>
 </head>
 <body class="w3-light-gray">
-<table class="w3-table-all w3-centered sprinkler-table w3-display-topmiddle w3-threequarter w3-mobile" id="settings-table">
+<table class="w3-table-all w3-centered sprinkler-table w3-display-topmiddle w3-threequarter w3-mobile"
+       id="settings-table">
 </table>
 <div class="w3-display-bottomleft w3-center w3-flat-silver w3-dropdown-hover " style="position:fixed;">
     <a href="javascript:void(0);" id="menuopen" class="w3-button fix-bars"> <i style="z-index: 5;"
@@ -42,9 +43,13 @@
                        required/>
             </div>
             <br>
-            <input type="number" hidden id="system">
-            <button style="float: right;" class="w3-button w3-round-xxlarge systemon" id="settings-submit">Submit
-            </button>
+            <input type="number" hidden id="system-id">
+            <input type="number" hidden id="system-number">
+            <span style="float: right">
+                <button id='zone-delete' class='w3-button w3-flat-alizarin w3-round-xlarge'>Delete</button>
+                &nbsp;
+                <button class="w3-button w3-round-xxlarge systemon" id="settings-submit">Submit</button>
+            </span>
             <a id="back" style="float:left;" class="w3-button w3-round-xxlarge systemoff">Back</a>
         </div>
     </div>
