@@ -17,7 +17,7 @@
 * Automatic shut off of sprinklers that are turned on from web page
   * Zones can be customized to have this feature turned on or off.
   * Zones that have this feature turned off are marked in *italics*
-* Customizable zone ordering
+* Customizable zone ordering (done via drag+drop on the settings page)
 ### SETUP
 
 - On debian, run the following command (after updating):
