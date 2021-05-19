@@ -50,7 +50,7 @@ class System
         $enabled = $this->sqlquery->querySQL("SELECT enabled from `Enabled`");
         $isEnabled = mysqli_fetch_array($enabled)[0];
         $newJson = (object)array();
-        $newJson->systemstatus = $isEnabled;
+        $newJson->systemenabled = boolval($isEnabled);
         return json_encode($newJson);
     }
 
