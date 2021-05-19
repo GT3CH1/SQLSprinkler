@@ -170,9 +170,11 @@ function onReorder() {
         order: table_json
     }
     console.log(postdata);
+    $("#settings-table").fadeOut(250);
     $.post('../lib/api.php',postdata).done(function(data){
         console.log(data);
-        buildZoneTable();
+        getZoneData();
+        $("#settings-table").fadeIn(250);
     });
 }
 
