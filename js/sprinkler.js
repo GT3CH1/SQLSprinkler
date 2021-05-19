@@ -1,12 +1,12 @@
 // Copyright 2021 Gavin Pease
-var system_status = "";
-let system_enable;
+let zoneStatus = "";
+let systemEnabled;
 let loadTable = true;
 
-function getSprinklerData() {
-    $.get('lib/api.php?systemstatus', function (data, textStatus, jqXHR) {
-        system_enable = JSON.parse(data)["systemstatus"] == "1";
-        if (system_enable) {
+function getZoneData() {
+    $.get('lib/api.php?systemstatus', function (data) {
+        systemEnabled = JSON.parse(data)["systemenabled"];
+        if (systemEnabled) {
             $("#schedule").html("On");
             $("#schedule-btn-txt").html("Enabled");
             $("#schedule-btn").removeClass("systemoff").addClass("systemon");
@@ -16,38 +16,32 @@ function getSprinklerData() {
             $("#schedule-btn-txt").html("Disabled");
         }
     });
-    $.get('lib/api.php?systems', function () {
-
-    }).done(function (data, textStatus, jqXHR) {
-        system_status = JSON.parse(data);
+    $.get('lib/api.php?systems').done(function (data) {
+        zoneStatus = JSON.parse(data);
         if (loadTable)
-            createTable();
+            buildZoneTable();
         loadTable = false;
     });
 }
 
-function getSprinklers() {
+function updateZoneTable() {
     setInterval(function () {
-        getSprinklerData();
+        getZoneData();
         let button_id;
-        let name_id;
-        for (i = 0; i < system_status.length; i++) {
-            button_id = system_status[i]["gpio"];
-            name_id = system_status[i]["status"] == "off" ? "On" : "Off";
+        let name_id, i;
+        for (i = 0; i < zoneStatus.length; i++) {
+            button_id = zoneStatus[i]["gpio"];
+            name_id = !zoneStatus[i]["status"] ? "On" : "Off";
             document.getElementById("status-button-" + i).innerHTML = name_id;
-            if (name_id == "Off") {
-                $("#" + button_id).removeClass("systemoff").fadeIn(150);
-                $("#" + button_id).addClass("systemon").fadeIn(150);
-            } else {
-                $("#" + button_id).removeClass("systemon").fadeIn(150);
-                $("#" + button_id).addClass("systemoff").fadeIn(150);
-            }
+            if (name_id === "Off")
+                $("#" + button_id).removeClass("systemoff").addClass("systemon");
+            else
+                $("#" + button_id).removeClass("systemon").addClass("systemoff");
         }
     }, 1000);
 }
 
 $(document).ready(function () {
-    $("#sprinklerData").delay(1750).fadeIn(250);
     $("#menuopen").click(function () {
         $("#menuopen").fadeOut(250, function () {
             $('#menunav').fadeIn(250);
@@ -59,18 +53,12 @@ $(document).ready(function () {
         });
     });
     $("#schedule-btn").click(function () {
-        let xhttp = new XMLHttpRequest();
-        let enabled = !system_enable;
-        var info = "systemenable=" + enabled;
-        xhttp.open("GET", "lib/api.php?" + info, true);
-        console.log("sending");
-        console.log(info);
-        xhttp.send();
+        $.post('lib/api.php', {systemtoggle: true});
     });
     $("#update").click(function () {
         console.log("Sent update request...");
         $("button").attr("disabled", "disabled");
-        $.get('lib/api.php?update', function (data, textStatus, jqXHR) {
+        $.get('lib/api.php?update', function (data) {
             console.log("Response -> " + data);
             $("#notification-text").html("Done checking for updates. Check log for more information.");
             $("#notification").fadeIn("slow");
@@ -82,28 +70,39 @@ $(document).ready(function () {
     });
 });
 
-function createTable() {
+function buildZoneTable() {
     let tr = "";
-    console.log(system_status.length)
-    for (i = 0; i < system_status.length; i++) {
-        let sprinklerInfo = system_status[i];
-        let name = sprinklerInfo['zonename'];
-        let gpio = sprinklerInfo['gpio'];
-        let enabled = sprinklerInfo['enabled'] ? "" : "unscheduled";
-        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name "+enabled+"'>Zone " + (i + 1) + "</p><p> " + name + " </p></div></td>"
-        tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='getData(" + i + "); return false' class='w3-button systemoff w3-round-xxlarge mybutton w3-center'>Turn <span id='status-button-" + i + "'>Off</span></button> </div></td></tr>"
+    for (let i = 0; i < zoneStatus.length; i++) {
+        let zoneData = zoneStatus[i];
+        let name = zoneData['name'];
+        let gpio = zoneData['gpio'];
+        let enabled = zoneData['enabled'] ? "" : "unscheduled";
+        let autooff = zoneData['autooff'] ? "" : "italic"
+        let on = zoneData['status'] ? "Off" : "On";
+        let zoneCss = zoneData['status'] ? "systemon" : "systemoff";
+        tr += "<tr><td><div class='sprinkler-info'><p class='sprinkler-name " + autooff + " " + enabled + "'>Zone " + (i + 1) + "</p>"
+        tr += "<p> " + name + " </p></div></td>"
+        tr += "<td><div class='sprinkler-button'><button id='" + gpio + "' name='toggle' onclick='sendData(" + i + ");";
+        tr += " return false' class='w3-button " + zoneCss + " w3-round-xxlarge mybutton w3-center'>"
+        tr += "Turn <span id='status-button-" + i + "'>" + on + "</span></button> </div></td></tr>"
     }
-    $("#sprinklerData").append(tr);
+    $("#sprinklerData").append(tr).fadeIn(250);
+
 }
 
-function getData(index) {
-    var xhttp = new XMLHttpRequest();
-    var toggle = ((system_status[index]["status"] == "on") ? "off" : "on");
-    var info = toggle + "=" + system_status[index]["gpio"];
-    xhttp.open("GET", "lib/api.php?" + info, true);
-    console.log("sending");
-    console.log(info);
-    xhttp.send();
+function sendData(index) {
+    let xhttp = new XMLHttpRequest();
+    const toggle = ((zoneStatus[index]["status"]) ? "off" : "on");
+    let gpio = zoneStatus[index]["gpio"];
+    data = {
+        gpio: gpio,
+        state: toggle
+    }
+    console.log(data);
+    $.post('lib/api.php', data).done(function (returns) {
+        console.log(returns);
+    });
+
 }
 
 

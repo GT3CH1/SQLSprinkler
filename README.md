@@ -1,8 +1,9 @@
 ## A lightweight web page to control sprinkler systems on a raspberry pi.
-![Main page](img/main.png)  
-
-![System Settings](img/settings.png)  
-  
+#### Main page
+![Main page](img/main.png)
+#### System Settings
+![System Settings](img/settings.png)
+#### Zone Configuration
 ![System Configuration](img/config.png)
 
 ### FEATURES
@@ -11,8 +12,12 @@
 * Mobile support.
 * Customizable sprinkler name and run time.
 * Automatic running of the schedule (each zone from top to bottom.)
+  * Zones can be customized to be enabled during the schedule run.
+  * Zones that are disabled from this schedule are marked in red.
 * Automatic shut off of sprinklers that are turned on from web page
-
+  * Zones can be customized to have this feature turned on or off.
+  * Zones that have this feature turned off are marked in *italics*
+* Customizable zone ordering (done via drag+drop on the settings page)
 ### SETUP
 
 - On debian, run the following command (after updating):
@@ -38,22 +43,18 @@
   9) Run `sudo -s`
   10) Run `su www-data -s /bin/bash`
   11) Run `crontab -e`
-    * Add your schedule for when you want the system to run automatically.
-    * If you need help, see [this link](!http://crontab.guru)
-    * Please use the following command: `sudo /var/www/html/modules/SQLSprinkler/lib/sys.py`
-    * After the configuration of the cron tab, save and exit.
+      * Add your schedule for when you want the system to run automatically.
+      * If you need help, see [https://crontab.guru](!https://crontab.guru)
+      * Please use the following command: `sudo /var/www/html/modules/SQLSprinkler/lib/sys.py`
+      * After the configuration of the cron tab, save and exit.
   12) Done!
 
 #### TODO
 * Write a script to run setup automatically.
 * Add a user to run python commands.
-* Convert the settings table to pure html and javascript.
-* Add a day schedule (like A and B days) (?)
+* Add a day schedule (like A and B days) for zones (?)
 * Add a script to allow user to control when the system automatically runs (cron) (?)
 * Better mobile support
-* Per-system auto off 
-* Web interface run time configuration(?)
-* Schedule builder (?)
 
 ### DEPENDENCIES
 #### Back-end
@@ -70,8 +71,11 @@
 -   apache2
 -   pip
 -   Cron
+
 #### Front-end
 -   jquery
+-   jquery ui
+-   [Touch Punch](!http://touchpunch.furf.com/)
 -   w3.css
 -   Font Awesome
 
@@ -81,12 +85,11 @@
 -   A stable internet connection
 
 ### ADDITIONAL INFORMATION
-* There can only be one system running at a time.
-* As of now, all systems configured to automatically shut off if turned on from the web page after their respective run time has elapsed
-* This system relies on relays to control the sprinkler system (one relay per system)
+* There can only be one zone running at a time.
+* As of now, all zones are configured to automatically shut off if turned on from the web page after their respective run time has elapsed.
+* This system relies on relays to control the sprinkler system (one relay per zone)
     * General knowledge of how to wire an electrical system is required.
-        * Please be careful while handling electricity. I am not responsible for anything. 
-
+        * Please be careful while handling electricity. I am not responsible for anything.
 
 Copyright 2021 Gavin Pease
 

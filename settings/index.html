@@ -1,3 +1,4 @@
+<!-- Copyright 2021 Gavin Pease -->
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,6 +9,8 @@
     <link href="../css/style.css" type="text/css" rel="stylesheet"/>
     <script src="https://kit.fontawesome.com/e00a151875.js" crossorigin="anonymous"></script>
     <script src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/jquery.ui.touch-punch.min.js"></script>
     <script src="../js/sprinkler.js"></script>
     <script src="../js/settings.js"></script>
 </head>
@@ -15,9 +18,10 @@
 <table class="w3-table-all w3-centered sprinkler-table w3-display-topmiddle w3-threequarter w3-mobile"
        id="settings-table">
 </table>
-<div class="w3-display-bottomleft w3-center w3-flat-silver w3-dropdown-hover " style="position:fixed;">
-    <a href="javascript:void(0);" id="menuopen" class="w3-button fix-bars"> <i style="z-index: 5;"
-                                                                               class="fa fa-bars w3-display-middle"></i></a>
+<div class="w3-display-bottomleft w3-center w3-flat-silver w3-dropdown-hover menunav" style="position:fixed;">
+    <a href="javascript:void(0);" id="menuopen" class="w3-button fix-bars">
+        <i style="z-index: 5;" class="fa fa-bars w3-display-middle"></i>
+    </a>
     <div style="display: none;" id="menunav">
         <a id="menuclose" class="w3-button"><i style="z-index: 5;" class="fa fa-times"></i></a>
         <a href="../" class="w3-button"><i style="z-index: 5;" class="fa fa-home"></i></a>
@@ -42,7 +46,6 @@
                 <input type="number" class="settings-input" min="0" max="180" id="zone-runtime" placeholder="10"
                        required/>
             </div>
-            <br>
             <hr>
             <div id="zone-enabled-details" class="subsetting">
                 <span class="setting-label">Zone Scheduled</span>
@@ -50,10 +53,17 @@
                        placeholder="10"
                        required/>
             </div>
+            <hr>
+            <div id="zone-autooff-details" class="subsetting">
+                <span class="setting-label">Zone Auto-off</span>
+                <input type="checkbox" class="settings-input w3-check" min="0" max="180" id="zone-autooff"
+                       placeholder="10"
+                       required/>
+            </div>
+            <hr>
             <br>
-            <br>
-            <input type="number" hidden id="system-id">
-            <input type="number" hidden id="system-number">
+            <input type="number" hidden id="zone-id">
+            <input type="number" hidden id="zone-number">
             <span style="float: right">
                 <button id="back" class="w3-button w3-round-xxlarge systemoff">Back</button>
                 &nbsp;
@@ -62,6 +72,7 @@
             <button id='zone-delete' style="float:left;" class='w3-button w3-flat-alizarin w3-round-xlarge'>Delete
             </button>
         </div>
+        <br>
     </div>
 </div>
 </body>
