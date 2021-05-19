@@ -5,8 +5,15 @@ include('Zone.php');
 
 class System
 {
+    /**
+     * The variable that holds the reference to the sql class
+     * @var doSQL
+     */
     private $sqlquery;
 
+    /**
+     * System constructor.
+     */
     public function __construct()
     {
         $this->sqlquery = new doSQL();
