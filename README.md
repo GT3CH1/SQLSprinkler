@@ -17,7 +17,7 @@
 * Automatic shut off of sprinklers that are turned on from web page
   * Zones can be customized to have this feature turned on or off.
   * Zones that have this feature turned off are marked in *italics*
-
+* Customizable zone ordering
 ### SETUP
 
 - On debian, run the following command (after updating):
@@ -55,7 +55,6 @@
 * Add a day schedule (like A and B days) for zones (?)
 * Add a script to allow user to control when the system automatically runs (cron) (?)
 * Better mobile support
-* Schedule builder (?)
 
 ### DEPENDENCIES
 #### Back-end
@@ -72,8 +71,11 @@
 -   apache2
 -   pip
 -   Cron
+
 #### Front-end
 -   jquery
+-   jquery ui
+-   [Touch Punch](!http://touchpunch.furf.com/)
 -   w3.css
 -   Font Awesome
 

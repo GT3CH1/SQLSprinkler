@@ -109,8 +109,7 @@ function createEditRow(index) {
     let id = zoneStatus[index]['id'];
     let enabled = zoneStatus[index]['enabled'] ? "" : "unscheduled";
     let autooff = zoneStatus[index]['autooff'] ? "" : "italic"
-
-    tr += "<tr class='"+enabled+" "+autooff+"'>";
+    tr += "<tr class='"+enabled+" "+autooff+" draggable' zoneid='"+id+" '> ";
     tr += "<td id='zone-" + id + "-index'></td>";
     tr += "<td id='zone-" + id + "-name' class='w3-hide-small'></td>";
     tr += "<td id='zone-" + id + "-time'></td>";
@@ -148,9 +147,33 @@ function setButtonListener() {
 }
 
 function buildZoneTable() {
-    $("#settings-table").html('<tr><th>Zone</th><th class="w3-hide-small">Name</th><th>Run Time</th><th>Actions</th></tr>');
+    $("#settings-table").html('<thead><tr class="nodrag"><th>Zone</th><th class="w3-hide-small">Name</th><th>Run Time</th><th>Actions</th></tr></thead>');
+    $("#settings-table").sortable({
+        update: function (event, ui) {
+            onReorder();
+        }
+    });
     updateZoneTable();
     setButtonListener();
+}
+
+function onReorder() {
+    let table_json = {};
+    let counter = 0;
+    $(".draggable").each(function () {
+        let name = $(this).attr('zoneid');
+        table_json[counter++] = parseInt(name);
+    });
+    postdata = {
+        contentType: 'application/json',
+        dataType: 'json',
+        order: table_json
+    }
+    console.log(postdata);
+    $.post('../lib/api.php',postdata).done(function(data){
+        console.log(data);
+        buildZoneTable();
+    });
 }
 
 function updateZoneTable() {

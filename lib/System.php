@@ -25,7 +25,7 @@ class System
      */
     public function getZones()
     {
-        $this->sqlquery->doSQLStuff("SELECT * FROM `Systems`");
+        $this->sqlquery->doSQLStuff("SELECT * FROM `Systems` ORDER BY `SystemOrder`");
         $array = array();
         for ($i = 0; $i < sizeof($this->sqlquery->ids); $i++) {
             $gpio = $this->sqlquery->gpios[$i];
@@ -114,6 +114,18 @@ class System
         $query = Zone::getDeleteQuery($zone);
         $this->sqlquery->doSQLStuff($query);
         return $query;
+    }
+
+    /**
+     *
+     * @param $order
+     */
+    function updateOrder($order)
+    {
+        for ($i = 0 ; $i < sizeof($order); $i++) {
+            $query = "UPDATE Systems SET SystemOrder=".$i." WHERE id=".$order[$i];
+            $this->sqlquery->doSQLStuff($query);
+        }
     }
 
 
