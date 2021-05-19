@@ -149,9 +149,7 @@ function setButtonListener() {
 function buildZoneTable() {
     $("#settings-table").html('<thead><tr class="nodrag"><th>Zone</th><th class="w3-hide-small">Name</th><th>Run Time</th><th>Actions</th></tr></thead>');
     $("#settings-table").sortable({
-        update: function (event, ui) {
-            onReorder();
-        }
+        update: onReorder
     });
     updateZoneTable();
     setButtonListener();
