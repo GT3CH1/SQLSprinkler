@@ -149,7 +149,9 @@ function setButtonListener() {
 function buildZoneTable() {
     $("#settings-table").html('<thead><tr class="nodrag"><th>Zone</th><th class="w3-hide-small">Name</th><th>Run Time</th><th>Actions</th></tr></thead>');
     $("#settings-table").sortable({
-        update: onReorder();
+        update: function (event, ui) {
+            onReorder();
+        }
     });
     updateZoneTable();
     setButtonListener();
@@ -167,6 +169,7 @@ function onReorder() {
         dataType: 'json',
         order: table_json
     }
+    console.log(postdata);
     $.post('../lib/api.php',postdata).done(function(data){
         console.log(data);
         buildZoneTable();
