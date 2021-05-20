@@ -1,4 +1,5 @@
 // Copyright 2021 Gavin Pease
+
 function getZoneData() {
     zoneStatus = "";
     $.get('../lib/api.php?systems').done(function (data) {
@@ -14,6 +15,10 @@ $(document).ready(function () {
     loadTable = true;
     window.deleteMode = false;
     getZoneData();
+    $("#settings-table").sortable({
+        update: onReorder
+    });
+    $("#settings-table").sortable('disable');
 });
 
 function getData(id, add) {
@@ -57,7 +62,7 @@ function submitChanges() {
     let addMode = window.addMode;
     let deleteMode = window.deleteMode;
     let data;
-    if(gpio === "" || gpio > 40) {
+    if (gpio === "" || gpio > 40) {
         alert("You must set a proper GPIO pin!");
         return;
     }
@@ -109,7 +114,7 @@ function createEditRow(index) {
     let id = zoneStatus[index]['id'];
     let enabled = zoneStatus[index]['enabled'] ? "" : "unscheduled";
     let autooff = zoneStatus[index]['autooff'] ? "" : "italic"
-    tr += "<tr class='"+enabled+" "+autooff+" draggable' zoneid='"+id+" '> ";
+    tr += "<tr class='" + enabled + " " + autooff + " draggable' zoneid='" + id + " '> ";
     tr += "<td id='zone-" + id + "-index'></td>";
     tr += "<td id='zone-" + id + "-name' class='w3-hide-small'></td>";
     tr += "<td id='zone-" + id + "-time'></td>";
@@ -118,6 +123,20 @@ function createEditRow(index) {
     tr += "</td>";
     tr += "</tr>";
     return tr;
+}
+
+function disableEditing() {
+    $("#settings-table").sortable("disable");
+    $("#edit").removeClass('w3-green w3-hover-green');
+}
+
+function enableEditing() {
+    if($("#edit").hasClass('w3-green')) {
+        disableEditing();
+        return;
+    }
+    $("#settings-table").sortable("enable");
+    $("#edit").addClass('w3-green w3-hover-green');
 }
 
 function setButtonListener() {
@@ -143,14 +162,12 @@ function setButtonListener() {
     });
     $("#back").click(function () {
         fadeEditOut();
-    })
+    });
+    $("#edit").click(enableEditing);
 }
 
 function buildZoneTable() {
     $("#settings-table").html('<thead><tr class="nodrag"><th>Zone</th><th class="w3-hide-small">Name</th><th>Run Time</th><th>Actions</th></tr></thead>');
-    $("#settings-table").sortable({
-        update: onReorder
-    });
     updateZoneTable();
     setButtonListener();
 }
@@ -169,7 +186,7 @@ function onReorder() {
     }
     console.log(postdata);
     $("#settings-table").fadeOut(250);
-    $.post('../lib/api.php',postdata).done(function(data){
+    $.post('../lib/api.php', postdata).done(function (data) {
         console.log(data);
         getZoneData();
         $("#settings-table").fadeIn(250);
