@@ -44,7 +44,7 @@ function getData(id, add) {
             window.addMode = false;
         }, 250);
     }
-    $("#edit").fadeIn(500);
+    $("#edit").delay(100).fadeIn(500);
 }
 
 function submitChanges() {
@@ -127,16 +127,16 @@ function createEditRow(index) {
 
 function disableEditing() {
     $("#settings-table").sortable("disable");
-    $("#edit").removeClass('w3-green w3-hover-green');
+    $("#edit-order").removeClass('w3-green w3-hover-green');
 }
 
 function enableEditing() {
-    if($("#edit").hasClass('w3-green')) {
+    if($("#edit-order").hasClass('w3-green')) {
         disableEditing();
         return;
     }
     $("#settings-table").sortable("enable");
-    $("#edit").addClass('w3-green w3-hover-green');
+    $("#edit-order").addClass('w3-green w3-hover-green');
 }
 
 function setButtonListener() {
@@ -154,16 +154,12 @@ function setButtonListener() {
             submitChanges();
         }
     });
-    $("#settings-submit").click(function () {
-        submitChanges();
-    });
-    $("#add").click(function () {
+    $("#settings-submit").click(submitChanges);
+    $("#add").click(function(){
         getData(-1, true);
     });
-    $("#back").click(function () {
-        fadeEditOut();
-    });
-    $("#edit").click(enableEditing);
+    $("#back").click(fadeEditOut);
+    $("#edit-order").click(enableEditing);
 }
 
 function buildZoneTable() {
