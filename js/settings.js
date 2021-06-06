@@ -178,8 +178,7 @@ function onReorder() {
     postdata = {
         contentType: 'application/json',
         dataType: 'json',
-        order: table_json,
-        call:'order'
+        order: table_json
     }
     console.log(postdata);
     $("#settings-table").fadeOut(250);
