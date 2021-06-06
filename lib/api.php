@@ -37,10 +37,6 @@ if (isset ($_POST['systemtoggle']))
 if (isset ($_GET['update']))
     echo shell_exec('/usr/bin/git fetch ; /usr/bin/git reset ; /usr/bin/git pull');
 
-if(isset ($_POST['order'])){
-    echo $system->updateOrder($_POST['order']);
-}
-
 if (isset($_POST['call'])) {
     $query = "";
     $myZone = $system->createZone($_POST);
@@ -53,6 +49,9 @@ if (isset($_POST['call'])) {
             break;
         case "delete":
             $query = $system->deleteZone($myZone);
+            break;
+        case "order":
+            echo $system->updateOrder($_POST['order']);
             break;
         default:
             break;
