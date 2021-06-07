@@ -37,9 +37,8 @@ if (isset ($_POST['systemtoggle']))
 if (isset ($_GET['update']))
     echo shell_exec('/usr/bin/git fetch ; /usr/bin/git reset ; /usr/bin/git pull');
 
-if(isset ($_POST['order'])){
-    echo $system->updateOrder($_POST['order']);
-}
+if(isset ($_POST['order']))
+    echo $system->updateOrder(json_decode($_POST['order'],true));
 
 if (isset($_POST['call'])) {
     $query = "";
