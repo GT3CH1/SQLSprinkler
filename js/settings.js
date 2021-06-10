@@ -15,10 +15,10 @@ $(document).ready(function () {
     loadTable = true;
     window.deleteMode = false;
     getZoneData();
-    $("#settings-table").sortable({
-        update: onReorder
+    $('#settings-table').sortable('disable', {
+        'disable': 'disable',
+        update: onReorder,
     });
-    $("#settings-table").sortable('disable');
 });
 
 function getData(id, add) {
@@ -134,9 +134,10 @@ function enableEditing() {
     if($("#edit-order").hasClass('w3-green')) {
         disableEditing();
         return;
+    } else {
+        $("#settings-table").sortable("enable");
+        $("#edit-order").addClass('w3-green w3-hover-green');
     }
-    $("#settings-table").sortable("enable");
-    $("#edit-order").addClass('w3-green w3-hover-green');
 }
 
 function setButtonListener() {
