@@ -34,7 +34,7 @@ if (isset($_POST['state'])) {
 if (isset ($_POST['systemtoggle']))
     echo $system->toggleSystemSchedule();
 
-if (isset ($_GET['update']))
+if (isset ($_POST['update']))
     echo shell_exec('/usr/bin/git fetch ; /usr/bin/git reset ; /usr/bin/git pull');
 
 if(isset ($_POST['order']))
