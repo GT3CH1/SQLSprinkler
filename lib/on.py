@@ -27,6 +27,6 @@ for row in list(cur.fetchall()):
     autooff=row[1]
     GPIO.setup(i, GPIO.OUT)
     GPIO.output(i, False)
-    if not autooff:
+    if autooff:
         time.sleep(row[0]*60)
         GPIO.output(i, True)
