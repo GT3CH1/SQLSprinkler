@@ -22,7 +22,7 @@ GPIO.setwarnings(False)
 db = sql.connect(host=HOST, user=USER, passwd=PASS, db=DB)
 
 cur = db.cursor()
-cur.execute("SELECT gpio FROM Systems;")
+cur.execute("SELECT gpio FROM Zones;")
 
 # print all the first cell of all the rows
 for item in list(cur.fetchall()):

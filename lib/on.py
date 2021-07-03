@@ -20,7 +20,7 @@ GPIO.setwarnings(False)
 db = sql.connect(host=HOST, user=USER, passwd=PASS, db=DB)
 cur = db.cursor()
 i = int(sys.argv[1])
-cur.execute("SELECT Time, Autooff FROM Systems WHERE gpio=" + str(i))
+cur.execute("SELECT Time, Autooff FROM Zones WHERE gpio=" + str(i))
 # print all the first cell of all the rows
 for row in list(cur.fetchall()):
     print(row[0])

@@ -76,7 +76,7 @@ class Zone
         $enabled = $data['enabled'];
         $autooff = $data['autooff'];
         $id = $data['id'];
-        $query = "UPDATE Systems SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime .
+        $query = "UPDATE Zones SET `Name`='" . $name . "', `GPIO`=" . $gpio . ", `Time`=" . $runtime .
             ", `Enabled`=" . $enabled . ", `Autooff`=" . $autooff . " WHERE id=" . $id;
         return $query;
     }
@@ -93,7 +93,7 @@ class Zone
         $runtime = $data['runtime'];
         $enabled = $data['enabled'];
         $autooff = $data['autooff'];
-        $query = "INSERT INTO `Systems` (`Name`, `GPIO`, `Time`, `Enabled`, `Autooff`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "'," . $enabled . "," . $autooff . ")";
+        $query = "INSERT INTO `Zones` (`Name`, `GPIO`, `Time`, `Enabled`, `Autooff`) VALUES ('" . $name . "','" . $gpio . "','" . $runtime . "'," . $enabled . "," . $autooff . ")";
         return $query;
     }
 
@@ -101,7 +101,7 @@ class Zone
     {
         $data = $zone->toJson();
         $id = json_decode($data,true)["id"];
-        $query = "DELETE FROM `Systems` WHERE `id` =" . $id;
+        $query = "DELETE FROM `Zones` WHERE `id` =" . $id;
         return $query;
     }
 }

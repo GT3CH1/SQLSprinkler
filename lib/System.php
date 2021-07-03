@@ -25,7 +25,7 @@ class System
      */
     public function getZones()
     {
-        $this->sqlquery->doSQLStuff("SELECT * FROM `Systems` ORDER BY `SystemOrder`");
+        $this->sqlquery->doSQLStuff("SELECT * FROM `Zones` ORDER BY `SystemOrder`");
         $array = array();
         for ($i = 0; $i < sizeof($this->sqlquery->ids); $i++) {
             $gpio = $this->sqlquery->gpios[$i];
@@ -123,7 +123,7 @@ class System
     function updateOrder($order)
     {
         for ($i = 0 ; $i < sizeof($order); $i++) {
-            $query = "UPDATE Systems SET SystemOrder=".$i." WHERE id=".$order[$i];
+            $query = "UPDATE Zones SET SystemOrder=".$i." WHERE id=".$order[$i];
             $this->sqlquery->doSQLStuff($query);
         }
     }
